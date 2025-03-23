@@ -110,6 +110,7 @@ const Navbar = () => {
     if (href) {
       // Navigate to the specific page
       router.push(href);
+      setIsOpen(false); // Close mobile menu
       return;
     }
 
@@ -121,7 +122,10 @@ const Navbar = () => {
       // If on home page, just scroll to the section
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        // Add a small delay to allow the mobile menu to close first
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
       }
     } else {
       // If on another page, navigate to home with hash
@@ -195,6 +199,19 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHomePage]);
+
+  // Effect to handle URL hash on page load
+  useEffect(() => {
+    if (isHomePage && window.location.hash) {
+      const sectionId = window.location.hash.substring(1);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 500); // Delay to ensure page is fully loaded
+      }
+    }
   }, [isHomePage]);
 
   const toggleMenu = () => {
