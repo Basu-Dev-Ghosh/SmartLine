@@ -234,7 +234,7 @@ const HeroSection = () => {
             >
               <span
                 style={{ color: BRAND_COLORS.smartlineRed }}
-                className="text-[34px]"
+                className="text-[34px] md:text-4xl lg:text-5xl"
               >
                 SMARTLiNE
               </span>{" "}
