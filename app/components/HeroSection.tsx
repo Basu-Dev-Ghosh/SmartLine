@@ -230,18 +230,20 @@ const HeroSection = () => {
             </motion.div>
             <motion.h1
               variants={itemVariants}
-              className="text-4xl md:text-5xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 leading-tight"
             >
-              <span style={{ color: BRAND_COLORS.smartlineRed }}>
+              <span
+                style={{ color: BRAND_COLORS.smartlineRed }}
+                className="text-[34px]"
+              >
                 SMARTLiNE
               </span>{" "}
-              E COMMERCE
               <br />
               <span className="text-slate-800">UPS & Battery Solutions</span>
             </motion.h1>
             <motion.p
               variants={itemVariants}
-              className="text-slate-600 text-lg leading-relaxed mb-8 max-w-2xl"
+              className="text-slate-600 text-md leading-relaxed mb-8 max-w-xl"
             >
               SMARTLiNE is a leading provider of UPS Services, Chargers,
               Battery, Solar solutions and Power Audit services. With expertise
