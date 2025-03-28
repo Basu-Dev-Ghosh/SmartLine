@@ -8,21 +8,39 @@ import MajorCustomers from "./components/MajorCustomers";
 import ValuedCustomersLogos from "./components/ValuedCustomersLogos";
 import WhyChooseSmartline from "./components/WhyChooseSmartline";
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+      <Navbar />
       <main>
-        <section id="hero"><HeroSection /></section>
-        <section id="products"><ProductsShowcase /></section>
-        <section id="services"><ServicesSection /></section>
-        <section id="partners"><PartnerBrands /></section>
-        <section id="customers"><MajorCustomers/></section>
-        <section id="valued-customers"><ValuedCustomersLogos/></section>
-        <section id="testimonials"><CustomerTestimonials/></section>
-        <section id="why-choose"><WhyChooseSmartline/></section>
+        <section id="hero">
+          <HeroSection />
+        </section>
+        <section id="products">
+          <ProductsShowcase />
+        </section>
+        <section id="services">
+          <ServicesSection />
+        </section>
+        <section id="partners">
+          <PartnerBrands />
+        </section>
+        <section id="customers">
+          <MajorCustomers />
+        </section>
+        <section id="valued-customers">
+          <ValuedCustomersLogos />
+        </section>
+        <section id="testimonials">
+          <CustomerTestimonials />
+        </section>
+        <section id="why-choose">
+          <WhyChooseSmartline />
+        </section>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

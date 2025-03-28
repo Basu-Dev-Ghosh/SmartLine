@@ -6,18 +6,34 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// Brand colors
+const BRAND_COLORS = {
+  primary: "#58c8e3", // smartline blue
+  secondary: "#dc2626", // smartline red
+};
+
+interface ServiceSubcategory {
+  id: string;
+  title: string;
+  description: string;
+}
+
 interface Service {
   id: string;
   icon: string;
   title: string;
   description: string;
   benefits: string[];
+  subcategories?: ServiceSubcategory[];
 }
 
 const ServicesSection = () => {
   // Use client-side detection to prevent hydration errors
   const [isClient, setIsClient] = useState(false);
   const [activeService, setActiveService] = useState<string | null>(null);
+  const [expandedService, setExpandedService] = useState<string | null>(
+    "ups-service"
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -35,17 +51,38 @@ const ServicesSection = () => {
     }
   };
 
+  // Exact service structure as specified
   const services: Service[] = [
     {
       id: "ups-service",
       icon: "M13 10V3L4 14h7v7l9-11h-7z",
       title: "UPS & Battery Service",
       description:
-        "Comprehensive service and maintenance for Online UPS and battery systems of all makes.",
+        "Complete range of UPS and battery maintenance and repair services.",
       benefits: [
-        "Preventive maintenance",
-        "24x7 emergency support",
-        "Performance optimization",
+        "Extended equipment lifespan",
+        "Reduced downtime risk",
+        "Improved system efficiency",
+      ],
+      subcategories: [
+        {
+          id: "ups-repair",
+          title: "UPS Repairing",
+          description:
+            "Expert diagnosis and repair of UPS systems of all brands and capacities.",
+        },
+        {
+          id: "ups-amc",
+          title: "UPS AMC Service",
+          description:
+            "Annual Maintenance Contracts ensuring your UPS operates at peak performance year-round.",
+        },
+        {
+          id: "preventive-maintenance",
+          title: "Preventive Maintenance",
+          description:
+            "Scheduled maintenance to prevent failures and extend equipment life.",
+        },
       ],
     },
     {
@@ -81,6 +118,30 @@ const ServicesSection = () => {
       benefits: ["Needs assessment", "Custom design", "Turnkey implementation"],
     },
     {
+      id: "ev-charger",
+      icon: "M5 12a1 1 0 01-1-1V5a1 1 0 011-1h2a1 1 0 011 1v1h10a1 1 0 011 1v7a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1H6a1 1 0 01-1-1z M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12",
+      title: "EV Charger Services",
+      description:
+        "Installation, maintenance and repair services for electric vehicle charging stations.",
+      benefits: [
+        "Expert technical support",
+        "Preventive maintenance",
+        "Performance optimization",
+      ],
+    },
+    {
+      id: "amc-service",
+      icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+      title: "UPS AMC Services",
+      description:
+        "Annual Maintenance Contracts ensuring your power systems operate at peak performance year-round.",
+      benefits: [
+        "Scheduled maintenance",
+        "Priority support",
+        "Cost predictability",
+      ],
+    },
+    {
       id: "electrical-wiring",
       icon: "M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z",
       title: "Electrical L.T. Wiring",
@@ -95,7 +156,7 @@ const ServicesSection = () => {
     {
       id: "solar-solutions",
       icon: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z",
-      title: "Solar Solutions",
+      title: "Customized Solar Solutions",
       description:
         "End-to-end solar power system installation and maintenance for sustainable energy generation.",
       benefits: [
@@ -104,31 +165,16 @@ const ServicesSection = () => {
         "Long-term ROI",
       ],
     },
-    {
-      id: "ev-charging",
-      icon: "M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12",
-      title: "EV Charging Infrastructure",
-      description:
-        "Setup and maintenance of electric vehicle charging stations for businesses and public areas.",
-      benefits: [
-        "Future-ready technology",
-        "Attract eco-conscious customers",
-        "Government incentive eligibility",
-      ],
-    },
-    {
-      id: "amc-service",
-      icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
-      title: "AMC Services",
-      description:
-        "Annual Maintenance Contracts ensuring your power systems operate at peak performance year-round.",
-      benefits: [
-        "Scheduled maintenance",
-        "Priority support",
-        "Cost predictability",
-      ],
-    },
   ];
+
+  // Toggle expanded service
+  const toggleExpand = (serviceId: string) => {
+    if (expandedService === serviceId) {
+      setExpandedService(null);
+    } else {
+      setExpandedService(serviceId);
+    }
+  };
 
   // Simple fade-in animation for cards
   const containerVariants = {
@@ -157,7 +203,7 @@ const ServicesSection = () => {
   // Server-side rendering or initial client render
   if (!isClient) {
     return (
-      <section className="py-16 bg-gray-50">
+      <section id="services" className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -183,8 +229,14 @@ const ServicesSection = () => {
       className="py-16 bg-gray-50 relative overflow-hidden"
     >
       {/* Background decorative elements */}
-      <div className="absolute top-0 left-0 -mt-20 -ml-20 w-80 h-80 bg-green-50 rounded-full opacity-20"></div>
-      <div className="absolute bottom-0 right-0 -mb-20 -mr-20 w-80 h-80 bg-red-50 rounded-full opacity-20"></div>
+      <div
+        className="absolute top-0 left-0 -mt-20 -ml-20 w-80 h-80 rounded-full opacity-20"
+        style={{ backgroundColor: `rgba(88, 200, 227, 0.2)` }}
+      ></div>
+      <div
+        className="absolute bottom-0 right-0 -mb-20 -mr-20 w-80 h-80 rounded-full opacity-20"
+        style={{ backgroundColor: `rgba(88, 200, 227, 0.1)` }}
+      ></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -206,60 +258,118 @@ const ServicesSection = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {services.map((service) => (
             <motion.div
               key={service.id}
               variants={cardVariants}
               whileHover={{
-                y: -10,
+                y: -5,
                 boxShadow:
-                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                  "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
               }}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+              className={`bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 flex flex-col h-full ${
+                expandedService === service.id ? "lg:col-span-3" : ""
+              }`}
               onMouseEnter={() => setActiveService(service.id)}
               onMouseLeave={() => setActiveService(null)}
             >
               <div className="p-6 flex-grow">
-                <motion.div
-                  className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-6"
-                  animate={{
-                    scale: activeService === service.id ? [1, 1.1, 1] : 1,
-                    backgroundColor:
-                      activeService === service.id
-                        ? [
-                            "rgb(220, 252, 231)",
-                            "rgb(187, 247, 208)",
-                            "rgb(220, 252, 231)",
-                          ]
-                        : "rgb(220, 252, 231)",
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: activeService === service.id ? Infinity : 0,
-                    repeatType: "loop",
-                  }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-green-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                <div className="flex justify-between items-start">
+                  <motion.div
+                    className="w-12 h-12 rounded-full flex items-center justify-center mb-6"
+                    style={{
+                      backgroundColor: `rgba(88, 200, 227, 0.1)`,
+                    }}
+                    animate={{
+                      scale: activeService === service.id ? [1, 1.1, 1] : 1,
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: activeService === service.id ? Infinity : 0,
+                      repeatType: "loop",
+                    }}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d={service.icon}
-                    />
-                  </svg>
-                </motion.div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      style={{ color: BRAND_COLORS.primary }}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d={service.icon}
+                      />
+                    </svg>
+                  </motion.div>
+
+                  {service.subcategories && (
+                    <button
+                      onClick={() => toggleExpand(service.id)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`h-5 w-5 transform transition-transform duration-300 ${
+                          expandedService === service.id ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d={
+                            expandedService === service.id
+                              ? "M5 15l7-7 7 7"
+                              : "M19 9l-7 7-7-7"
+                          }
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   {service.title}
                 </h3>
                 <p className="text-gray-600 mb-4">{service.description}</p>
+
+                {/* Expanded subcategories */}
+                {service.subcategories && expandedService === service.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-4 mb-6"
+                  >
+                    <h4 className="font-medium text-gray-800 mb-3 text-sm uppercase tracking-wider">
+                      Our Services Include:
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {service.subcategories.map((subcat, idx) => (
+                        <div
+                          key={subcat.id}
+                          className="bg-gray-50 p-4 rounded-md"
+                        >
+                          <h5 className="font-medium text-gray-900 mb-1">
+                            {subcat.title}
+                          </h5>
+                          <p className="text-sm text-gray-600">
+                            {subcat.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
 
                 <div className="mt-auto">
                   <h4 className="font-medium text-gray-800 mb-2">
@@ -269,7 +379,8 @@ const ServicesSection = () => {
                     {service.benefits.map((benefit, idx) => (
                       <li key={idx} className="flex items-start">
                         <motion.svg
-                          className="w-4 h-4 mt-1 mr-2 text-green-500"
+                          className="w-4 h-4 mt-1 mr-2"
+                          style={{ color: BRAND_COLORS.primary }}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -304,9 +415,10 @@ const ServicesSection = () => {
               <div className="mt-auto p-4 border-t border-gray-100">
                 <Link href="/contact">
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full py-2 bg-gray-50 text-green-600 font-medium rounded hover:bg-green-50 transition-colors duration-300 text-sm flex items-center justify-center"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full py-2 bg-gray-50 font-medium rounded hover:bg-gray-100 transition-colors duration-300 text-sm flex items-center justify-center"
+                    style={{ color: BRAND_COLORS.primary }}
                   >
                     Learn More
                     <svg
@@ -341,10 +453,14 @@ const ServicesSection = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2">
               {/* Left side - text content */}
               <div className="p-8 lg:p-12">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-100 mb-6">
+                <div
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-6"
+                  style={{ backgroundColor: `rgba(88, 200, 227, 0.1)` }}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-green-600"
+                    className="h-6 w-6"
+                    style={{ color: BRAND_COLORS.primary }}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -392,7 +508,10 @@ const ServicesSection = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="flex">
                       <div className="flex-shrink-0">
-                        <div className="flex items-center justify-center h-6 w-6 rounded-full bg-green-100 text-green-600">
+                        <div
+                          className="flex items-center justify-center h-6 w-6 rounded-full text-white"
+                          style={{ backgroundColor: BRAND_COLORS.primary }}
+                        >
                           {idx + 1}
                         </div>
                       </div>
@@ -415,7 +534,10 @@ const ServicesSection = () => {
                       boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
                     }}
                     whileTap={{ scale: 0.95 }}
-                    className="mt-8 px-6 py-3 bg-green-600 text-white font-medium rounded-md shadow-md hover:bg-green-700 transition-colors duration-300 inline-flex items-center"
+                    className="mt-8 px-6 py-3 text-white font-medium rounded-md shadow-md transition-colors duration-300 inline-flex items-center"
+                    style={{
+                      backgroundColor: BRAND_COLORS.primary,
+                    }}
                   >
                     Contact Our Service Team
                     <svg
@@ -437,7 +559,10 @@ const ServicesSection = () => {
               </div>
 
               {/* Right side - Service stats */}
-              <div className="bg-green-600 p-8 lg:p-12 text-white">
+              <div
+                className="p-8 lg:p-12 text-white"
+                style={{ backgroundColor: BRAND_COLORS.primary }}
+              >
                 <h3 className="text-2xl font-bold mb-8">
                   Why Customers Choose Our Services
                 </h3>
@@ -454,7 +579,8 @@ const ServicesSection = () => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                      className="text-center bg-green-700 bg-opacity-30 p-6 rounded-lg"
+                      className="text-center p-6 rounded-lg"
+                      style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                     >
                       <motion.div
                         animate={{
@@ -470,12 +596,12 @@ const ServicesSection = () => {
                       >
                         {stat.number}
                       </motion.div>
-                      <p className="text-green-100">{stat.label}</p>
+                      <p className="text-white/80">{stat.label}</p>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className="mt-12 border-t border-green-500 pt-8">
+                <div className="mt-12 border-t border-white/20 pt-8">
                   <h4 className="font-semibold mb-4">
                     Service Level Agreement Benefits:
                   </h4>
@@ -489,7 +615,7 @@ const ServicesSection = () => {
                     ].map((item, idx) => (
                       <li key={idx} className="flex items-center">
                         <svg
-                          className="w-5 h-5 mr-2 text-green-300"
+                          className="w-5 h-5 mr-2 text-white/70"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -535,7 +661,8 @@ const ServicesSection = () => {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => router.push("/contact?tab=quote")}
-              className="px-8 py-3 bg-green-600 text-white font-medium rounded-md shadow-md hover:bg-green-700 transition-colors duration-300"
+              className="px-8 py-3 text-white font-medium rounded-md shadow-md transition-colors duration-300"
+              style={{ backgroundColor: BRAND_COLORS.primary }}
             >
               Request a Quote
             </motion.button>
@@ -546,7 +673,11 @@ const ServicesSection = () => {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={scrollToTestimonials}
-              className="px-8 py-3 bg-white text-green-600 font-medium rounded-md shadow-md border border-green-600 hover:bg-green-50 transition-colors duration-300"
+              className="px-8 py-3 bg-white font-medium rounded-md shadow-md border transition-colors duration-300"
+              style={{
+                color: BRAND_COLORS.primary,
+                borderColor: BRAND_COLORS.primary,
+              }}
             >
               See Testimonials
             </motion.button>

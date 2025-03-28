@@ -4,6 +4,13 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as THREE from "three";
+import Image from "next/image";
+
+// Define brand colors
+const BRAND_COLORS = {
+  smartlineBlue: "#58c8e3",
+  smartlineRed: "#dc2626",
+};
 
 const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,13 +37,33 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    // Convert hex color to THREE.js color
+    const blueColor = new THREE.Color(BRAND_COLORS.smartlineBlue);
+    const redColor = new THREE.Color(BRAND_COLORS.smartlineRed);
+
     // Particle system
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 5000;
     const posArray = new Float32Array(particlesCount * 3);
+    const colorsArray = new Float32Array(particlesCount * 3);
 
-    for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 50;
+    for (let i = 0; i < particlesCount; i++) {
+      // Position
+      posArray[i * 3] = (Math.random() - 0.5) * 50;
+      posArray[i * 3 + 1] = (Math.random() - 0.5) * 50;
+      posArray[i * 3 + 2] = (Math.random() - 0.5) * 50;
+
+      // Color - mix between red and blue
+      const mixFactor = Math.random();
+      const mixedColor = new THREE.Color().lerpColors(
+        redColor,
+        blueColor,
+        mixFactor
+      );
+
+      colorsArray[i * 3] = mixedColor.r;
+      colorsArray[i * 3 + 1] = mixedColor.g;
+      colorsArray[i * 3 + 2] = mixedColor.b;
     }
 
     particlesGeometry.setAttribute(
@@ -44,11 +71,16 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
       new THREE.BufferAttribute(posArray, 3)
     );
 
+    particlesGeometry.setAttribute(
+      "color",
+      new THREE.BufferAttribute(colorsArray, 3)
+    );
+
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.03,
-      color: 0x16a34a,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.5,
     });
 
     const particlesMesh = new THREE.Points(
@@ -59,7 +91,7 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
 
     // Connecting lines between particles
     const linesMaterial = new THREE.LineBasicMaterial({
-      color: 0x16a34a,
+      color: blueColor,
       transparent: true,
       opacity: 0.1,
     });
@@ -94,7 +126,7 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
       // Update particles based on loading progress
       const progress = loadingProgress / 100;
       particlesMesh.scale.set(progress, progress, progress);
-      particlesMesh.material.opacity = progress * 0.4;
+      particlesMesh.material.opacity = progress * 0.5;
 
       renderer.render(scene, camera);
     };
@@ -117,7 +149,7 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
     // Simulate loading progress
     const progressInterval = setInterval(() => {
       setLoadingProgress((prev) => {
-        const newProgress = prev + 10;
+        const newProgress = prev + Math.floor(Math.random() * 10) + 5; // More random progress
 
         if (newProgress >= 50) {
           setLoadingStage("expanding");
@@ -126,10 +158,10 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
         if (newProgress >= 100) {
           clearInterval(progressInterval);
           setLoadingStage("complete");
-          setTimeout(onComplete, 500);
+          setTimeout(onComplete, 800); // Slightly longer transition
         }
 
-        return newProgress;
+        return Math.min(newProgress, 100); // Cap at 100
       });
     }, 200);
 
@@ -145,6 +177,20 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
     };
   }, [onComplete]);
 
+  // Loading messages
+  const loadingMessages = [
+    "Initializing Smart Solutions",
+    "Powering Up Your Experience",
+    "Almost Ready...",
+  ];
+
+  const currentMessage =
+    loadingStage === "initial"
+      ? loadingMessages[0]
+      : loadingStage === "expanding"
+      ? loadingMessages[1]
+      : loadingMessages[2];
+
   return (
     <AnimatePresence>
       {loadingStage !== "complete" && (
@@ -153,10 +199,10 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 2,
-            transition: { duration: 0.5 },
+            scale: 1.5,
+            transition: { duration: 0.8, ease: "easeInOut" },
           }}
-          className="fixed inset-0 z-[9999] bg-gradient-to-br from-green-50 to-white overflow-hidden flex items-center justify-center"
+          className="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-50 to-white overflow-hidden flex items-center justify-center"
         >
           {/* Three.js Canvas */}
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
@@ -173,9 +219,9 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
                 damping: 10,
               },
             }}
-            className="text-center relative z-10"
+            className="text-center relative z-10 flex flex-col items-center justify-center"
           >
-            {/* Logo Text with Framer Motion Animation */}
+            {/* Logo with Image */}
             <motion.div
               initial={{
                 scale: 0.5,
@@ -185,26 +231,49 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
                 scale: [0.5, 1.1, 1],
                 opacity: 1,
                 transition: {
-                  duration: 0.8,
+                  duration: 1,
                   times: [0, 0.7, 1],
                   ease: "easeInOut",
                 },
               }}
-              className="mb-4"
+              className="mb-8 relative"
             >
-              <span className="text-5xl font-bold">
-                <span className="text-black">SMART</span>
-                <span className="text-green-600">LiNE</span>
-              </span>
+              <div className="relative w-60 h-60 flex items-center justify-center">
+                {/* Add glow effect behind logo */}
+                <div className="absolute w-full h-full rounded-full bg-gradient-to-r from-[#58c8e3]/20 to-[#dc2626]/20 blur-xl"></div>
+
+                {/* Logo image */}
+                <div className="relative z-10">
+                  <Image
+                    src="/logo.png"
+                    alt="SMARTLiNE Logo"
+                    width={150}
+                    height={150}
+                    className="object-contain"
+                  />
+                </div>
+              </div>
             </motion.div>
 
-            {/* Loading Progress */}
-            <div className="w-72 bg-gray-200 rounded-full h-3 mb-4 overflow-hidden">
-              <div
-                style={{ width: `${loadingProgress}%` }}
-                className="bg-gradient-to-r from-green-500 to-green-700 h-full rounded-full transition-all duration-200"
+            {/* Loading Progress Bar */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              animate={{
+                opacity: 1,
+                width: "18rem",
+                transition: { delay: 0.3, duration: 0.5 },
+              }}
+              className="relative mb-6 h-2 w-72 rounded-full overflow-hidden bg-gray-200 shadow-inner"
+            >
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{
+                  width: `${loadingProgress}%`,
+                  transition: { duration: 0.3 },
+                }}
+                className="h-full rounded-full bg-gradient-to-r from-[#dc2626] to-[#58c8e3]"
               />
-            </div>
+            </motion.div>
 
             {/* Tagline */}
             <motion.p
@@ -217,13 +286,24 @@ const SplashLoader = ({ onComplete }: { onComplete: () => void }) => {
                   duration: 0.5,
                 },
               }}
-              className="text-lg text-gray-600 mb-2"
+              className="text-lg font-medium text-gray-700"
             >
-              {loadingStage === "initial"
-                ? "Initializing Smart Solutions"
-                : loadingStage === "expanding"
-                ? "Powering Up"
-                : "Launching SMARTLiNE"}
+              {currentMessage}
+            </motion.p>
+
+            {/* Progress percentage */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 0.7,
+                transition: {
+                  delay: 0.7,
+                  duration: 0.5,
+                },
+              }}
+              className="text-sm text-gray-500 mt-2"
+            >
+              {loadingProgress}%
             </motion.p>
           </motion.div>
         </motion.div>

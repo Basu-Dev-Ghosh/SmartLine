@@ -5,8 +5,23 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+// Brand colors
+const BRAND_COLORS = {
+  primary: "#58c8e3", // smartline blue
+  secondary: "#dc2626", // smartline red
+};
+
 const WhyChooseSmartline = () => {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [expandedRegion, setExpandedRegion] = useState<string | null>(null);
+
+  const toggleRegion = (regionId: string) => {
+    if (expandedRegion === regionId) {
+      setExpandedRegion(null);
+    } else {
+      setExpandedRegion(regionId);
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -44,12 +59,11 @@ const WhyChooseSmartline = () => {
           stroke="currentColor"
           strokeWidth="1.5"
         >
-          <path d="M11.35 3.836c-.065.21-.1.436-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664" />
+          <path d="M11.35 3.836c-.065.21-.1.436-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15a2.25 2.25 0 0 1 2.15 1.586m-5.8 0c-.376.094-.75.302-.75.714v3.465a.75.75 0 0 1-.072.362l-3.483 6.19a.75.75 0 0 0 .188.787l2.5 2.5a.75.75 0 0 0 .787.188l6.19-3.483a.75.75 0 0 1 .362-.072h3.465a.75.75 0 0 0 .714-.75a2.25 2.25 0 0 0-.1-.664" />
         </svg>
       ),
       description:
         "Our team brings deep expertise, delivering customized solutions tailored to your specific industry needs.",
-      color: "green",
     },
     {
       id: "availability",
@@ -67,7 +81,6 @@ const WhyChooseSmartline = () => {
       ),
       description:
         "24/7 support through multiple communication channels, ensuring we're always within reach.",
-      color: "blue",
     },
     {
       id: "flexibility",
@@ -85,7 +98,6 @@ const WhyChooseSmartline = () => {
       ),
       description:
         "Agile approach to meet evolving client requirements with quick adaptation and custom solutions.",
-      color: "amber",
     },
     {
       id: "speed",
@@ -103,7 +115,54 @@ const WhyChooseSmartline = () => {
       ),
       description:
         "Rapid response and solution delivery, keeping pace with your business's dynamic needs.",
-      color: "red",
+    },
+  ];
+
+  // Geographic regions
+  const regions = [
+    {
+      id: "north",
+      name: "North Bengal & Sikkim",
+      description: "Residential Technical Hub and dedicated support",
+      areas: [
+        "Coochbehar",
+        "Siliguri",
+        "Jalpaiguri",
+        "Alipurduar",
+        "Darjeeling",
+        "Sikkim",
+      ],
+    },
+    {
+      id: "central",
+      name: "Central Regions",
+      description: "Dedicated manpower for comprehensive coverage",
+      areas: ["Uttar Dinajpur", "Dakshin Dinajpur", "Malda"],
+    },
+    {
+      id: "west",
+      name: "Western Regions",
+      description: "Technical expertise across industrial centers",
+      areas: ["Asansol", "Purulia", "Durgapur", "Surrounding Regions"],
+    },
+    {
+      id: "east",
+      name: "Eastern Regions",
+      description: "Dedicated service and support personnel",
+      areas: ["Purba Medinipur", "Paschim Medinipur"],
+    },
+    {
+      id: "kolkata",
+      name: "Kolkata & Surroundings",
+      description: "Head Office and primary service hub",
+      areas: [
+        "Kolkata",
+        "Howrah",
+        "Hooghly",
+        "Krishnanagar",
+        "Burdwan",
+        "Surrounding Areas",
+      ],
     },
   ];
 
@@ -125,8 +184,9 @@ const WhyChooseSmartline = () => {
             variants={itemVariants}
             className="text-3xl md:text-4xl font-bold text-gray-900 mb-4"
           >
-            Why Choose <span className="text-red-600">SMART</span>{" "}
-            <span className="text-green-600">LiNE</span>
+            Why Choose{" "}
+            <span style={{ color: BRAND_COLORS.secondary }}>SMART</span>{" "}
+            <span style={{ color: BRAND_COLORS.primary }}>LiNE</span>
           </motion.h2>
           <motion.p
             variants={itemVariants}
@@ -135,6 +195,148 @@ const WhyChooseSmartline = () => {
             Delivering innovative solutions with expertise, reliability, and
             commitment
           </motion.p>
+        </motion.div>
+
+        {/* Geographic Presence Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+            <div className="p-6 md:p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  style={{ color: BRAND_COLORS.primary }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Geographical Presence
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Comprehensive coverage across West Bengal & Sikkim with a 50+
+                personnel service team
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {regions.map((region) => (
+                  <motion.div
+                    key={region.id}
+                    whileHover={{ y: -5 }}
+                    className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden"
+                  >
+                    <div
+                      className="p-4 cursor-pointer flex justify-between items-center"
+                      onClick={() => toggleRegion(region.id)}
+                    >
+                      <h4 className="font-medium text-gray-800">
+                        {region.name}
+                      </h4>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`h-4 w-4 transition-transform ${
+                          expandedRegion === region.id
+                            ? "transform rotate-180"
+                            : ""
+                        }`}
+                        style={{ color: BRAND_COLORS.primary }}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
+
+                    {expandedRegion === region.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="px-4 pb-4"
+                      >
+                        <p className="text-sm text-gray-600 mb-2">
+                          {region.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {region.areas.map((area, index) => (
+                            <span
+                              key={index}
+                              className="inline-block px-2 py-1 text-xs rounded"
+                              style={{
+                                backgroundColor: `rgba(88, 200, 227, 0.1)`,
+                                color: BRAND_COLORS.primary,
+                              }}
+                            >
+                              {area}
+                            </span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-6 p-4 bg-white rounded-md shadow-sm border border-gray-100">
+                <div className="flex items-start">
+                  <div
+                    className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center mr-4"
+                    style={{ backgroundColor: `rgba(88, 200, 227, 0.1)` }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      style={{ color: BRAND_COLORS.primary }}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-800">
+                      Head Office and Primary Repairing Hub in Kolkata
+                    </h4>
+                    <p className="text-sm text-gray-600 mt-1">
+                      Service team of over 50 personnel throughout West Bengal
+                      to provide prompt and reliable support.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Strengths Grid */}
@@ -151,33 +353,34 @@ const WhyChooseSmartline = () => {
               variants={itemVariants}
               whileHover={{
                 y: -10,
-                scale: 1.05,
                 boxShadow: "0 15px 25px -5px rgba(0, 0, 0, 0.1)",
               }}
-              className={`
-                bg-white border border-gray-100 rounded-xl p-6 
+              className="bg-white border border-gray-100 rounded-lg p-6 
                 transform transition-all duration-300 
-                hover:shadow-xl group
-                relative overflow-hidden
-              `}
+                hover:shadow-lg group
+                relative overflow-hidden"
               onMouseEnter={() => setHoveredCard(strength.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
               {/* Subtle background accent */}
               <div
-                className={`absolute inset-0 opacity-10 bg-${strength.color}-500`}
-                style={{ clipPath: "circle(70% at 100% 0)" }}
+                className="absolute inset-0 opacity-10"
+                style={{
+                  backgroundColor: BRAND_COLORS.primary,
+                  clipPath: "circle(70% at 100% 0)",
+                }}
               />
 
               {/* Icon */}
               <div
-                className={`
-                  w-14 h-14 mb-4 rounded-full 
-                  bg-${strength.color}-50 text-${strength.color}-600
+                className="w-14 h-14 mb-4 rounded-full 
                   flex items-center justify-center
                   transition-transform duration-300
-                  group-hover:scale-110
-                `}
+                  group-hover:scale-110"
+                style={{
+                  backgroundColor: `rgba(88, 200, 227, 0.1)`,
+                  color: BRAND_COLORS.primary,
+                }}
               >
                 {strength.icon}
               </div>
@@ -205,43 +408,35 @@ const WhyChooseSmartline = () => {
             {
               number: "20+",
               label: "Years of Experience",
-              color: "green",
             },
             {
               number: "24/7",
               label: "Customer Support",
-              color: "blue",
             },
             {
-              number: "100%",
-              label: "Client Satisfaction",
-              color: "amber",
+              number: "50+",
+              label: "Service Personnel",
             },
             {
               number: "Fast",
               label: "Response Time",
-              color: "red",
             },
           ].map((stat, index) => (
             <motion.div
               key={index}
               whileHover={{
                 y: -5,
-                scale: 1.05,
               }}
               transition={{ duration: 0.2 }}
-              className={`
-                bg-${stat.color}-50 border border-${stat.color}-100
-                rounded-xl p-6 
-                transform transition-all duration-300
-                hover:shadow-md
-              `}
+              className="rounded-lg p-6 border transform transition-all duration-300 hover:shadow-md"
+              style={{
+                backgroundColor: `rgba(88, 200, 227, 0.05)`,
+                borderColor: `rgba(88, 200, 227, 0.1)`,
+              }}
             >
               <h3
-                className={`
-                  text-2xl md:text-3xl font-bold 
-                  text-${stat.color}-600 mb-2
-                `}
+                className="text-2xl md:text-3xl font-bold mb-2"
+                style={{ color: BRAND_COLORS.primary }}
               >
                 {stat.number}
               </h3>
@@ -259,7 +454,8 @@ const WhyChooseSmartline = () => {
           className="mt-16 text-center"
         >
           <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Ready to <span className="text-green-600">Transform</span> Your
+            Ready to{" "}
+            <span style={{ color: BRAND_COLORS.primary }}>Transform</span> Your
             Business?
           </h3>
           <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
@@ -274,16 +470,13 @@ const WhyChooseSmartline = () => {
                 boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="
-                px-8 py-3 
-                bg-green-600 text-white 
-                font-semibold rounded-full 
-                shadow-lg hover:bg-green-700 
+              className="px-8 py-3 text-white font-semibold rounded-lg 
+                shadow-md hover:shadow-lg 
                 transition-all duration-300
                 flex items-center justify-center
                 mx-auto
-                group
-              "
+                group"
+              style={{ backgroundColor: BRAND_COLORS.primary }}
             >
               Contact Our Experts
               <svg

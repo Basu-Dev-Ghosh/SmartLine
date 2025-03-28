@@ -5,6 +5,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+// Brand colors
+const BRAND_COLORS = {
+  primary: "#58c8e3", // smartline blue
+  secondary: "#dc2626", // smartline red
+};
+
 interface Partner {
   id: string;
   name: string;
@@ -105,7 +111,7 @@ const PartnerBrands = () => {
       : partners.filter((partner) => partner.type === activeTab);
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section id="partners" className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -116,7 +122,8 @@ const PartnerBrands = () => {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Our Trusted <span className="text-green-600">Partners</span>
+            Our Trusted{" "}
+            <span style={{ color: BRAND_COLORS.primary }}>Partners</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Collaborating with industry leaders to deliver innovative solutions
@@ -131,20 +138,26 @@ const PartnerBrands = () => {
           viewport={{ once: true }}
           className="flex justify-center mb-12"
         >
-          <div className="inline-flex bg-white rounded-full shadow-md">
+          <div className="inline-flex bg-white rounded-lg shadow-md">
             {[
               { value: "all", label: "All Partners" },
               { value: "oem", label: "OEM Partners" },
               { value: "si", label: "SI Partners" },
-            ].map((tab) => (
+            ].map((tab, index) => (
               <button
                 key={tab.value}
                 onClick={() => setActiveTab(tab.value as "all" | "oem" | "si")}
-                className={`px-6 py-2 text-sm font-medium transition-all duration-300 ${
+                className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
+                  index === 0 ? "rounded-l-lg" : ""
+                } ${index === 2 ? "rounded-r-lg" : ""} ${
                   activeTab === tab.value
-                    ? "bg-green-600 text-white rounded-full"
+                    ? "text-white"
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
+                style={{
+                  backgroundColor:
+                    activeTab === tab.value ? BRAND_COLORS.primary : "",
+                }}
               >
                 {tab.label}
               </button>
@@ -164,13 +177,13 @@ const PartnerBrands = () => {
               key={partner.id}
               variants={itemVariants}
               whileHover={{
-                scale: 1.05,
-                boxShadow: "0 15px 25px -5px rgba(0,0,0,0.1)",
+                y: -5,
+                boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
               }}
-              className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl"
+              className="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 border border-gray-100"
             >
               {/* Partner Logo */}
-              <div className="h-36 flex items-center justify-center bg-gray-50 border-b border-gray-100">
+              <div className="h-36 flex items-center justify-center bg-gray-50 border-b border-gray-100 p-4">
                 <img
                   src={partner.logo}
                   alt={partner.name}
@@ -186,7 +199,13 @@ const PartnerBrands = () => {
                 <p className="text-xs text-gray-600 mb-3 line-clamp-2">
                   {partner.description}
                 </p>
-                <div className="bg-green-50 text-green-700 rounded-full px-3 py-1 text-xs inline-block">
+                <div
+                  className="rounded-md px-3 py-1 text-xs inline-block"
+                  style={{
+                    backgroundColor: `rgba(88, 200, 227, 0.1)`,
+                    color: BRAND_COLORS.primary,
+                  }}
+                >
                   {partner.type === "oem" ? "OEM Partner" : "SI Partner"}
                 </div>
               </div>
@@ -200,12 +219,13 @@ const PartnerBrands = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-16 bg-gradient-to-r from-blue-600 via-indigo-500 to-green-500 rounded-2xl overflow-hidden shadow-xl"
+          className="mt-16 rounded-lg overflow-hidden shadow-lg border border-gray-100"
+          style={{ borderTop: `4px solid ${BRAND_COLORS.primary}` }}
         >
-          <div className="bg-white p-8 rounded-b-2xl">
+          <div className="bg-white p-8">
             <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
               Strategic Partnership{" "}
-              <span className="text-blue-600">Advantages</span>
+              <span style={{ color: BRAND_COLORS.primary }}>Advantages</span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -276,9 +296,15 @@ const PartnerBrands = () => {
               ].map((advantage, index) => (
                 <div
                   key={index}
-                  className="bg-blue-50 rounded-xl p-6 flex flex-col items-center text-center hover:shadow-lg transition-all"
+                  className="rounded-lg p-6 flex flex-col items-center text-center transition-all border border-gray-100 bg-white shadow-sm hover:shadow-md"
                 >
-                  <div className="bg-blue-100 text-blue-600 rounded-full p-4 mb-4">
+                  <div
+                    className="rounded-full p-4 mb-4"
+                    style={{
+                      backgroundColor: `rgba(88, 200, 227, 0.1)`,
+                      color: BRAND_COLORS.primary,
+                    }}
+                  >
                     {advantage.icon}
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-3">
@@ -294,10 +320,11 @@ const PartnerBrands = () => {
             {/* Call to Action */}
             <div className="text-center mt-12">
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => router.push("/contact")}
-                className="bg-green-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg hover:bg-green-700 transition-all inline-flex items-center group"
+                className="text-white px-8 py-3 rounded-md text-lg font-medium shadow-md hover:shadow-lg transition-all inline-flex items-center group"
+                style={{ backgroundColor: BRAND_COLORS.primary }}
               >
                 Become a Partner
                 <svg

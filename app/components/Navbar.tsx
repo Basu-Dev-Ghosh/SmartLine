@@ -3,9 +3,15 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import Logo from "./Logo";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Define brand colors
+const BRAND_COLORS = {
+  smartlineBlue: "#58c8e3",
+  smartlineRed: "#dc2626",
+};
 
 interface DropdownProps {
   title: string;
@@ -16,6 +22,7 @@ interface DropdownProps {
 
 const Dropdown = ({ title, items, isScrolled, onItemClick }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,12 +42,15 @@ const Dropdown = ({ title, items, isScrolled, onItemClick }: DropdownProps) => {
     <div ref={ref} className="relative mt-1">
       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
         <button
-          className={`text-sm font-medium transition-colors duration-200 flex items-center gap-1 ${
-            isScrolled
-              ? "text-gray-800 hover:text-green-600"
-              : "text-gray-800 hover:text-green-600"
+          className={`text-sm font-medium transition-colors duration-200 flex items-center gap-1 text-gray-800 ${
+            isHovered ? "text-[#58c8e3]" : ""
           }`}
-          onMouseEnter={() => setIsOpen(true)}
+          style={{ color: isHovered ? BRAND_COLORS.smartlineBlue : "#374151" }}
+          onMouseEnter={() => {
+            setIsOpen(true);
+            setIsHovered(true);
+          }}
+          onMouseLeave={() => setIsHovered(false)}
           onClick={() => setIsOpen(!isOpen)}
         >
           {title}
@@ -78,13 +88,14 @@ const Dropdown = ({ title, items, isScrolled, onItemClick }: DropdownProps) => {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.2, delay: index * 0.05 }}
+                className="dropdown-item-container"
               >
                 <button
                   onClick={() => {
                     onItemClick(item.sectionId, item.href);
                     setIsOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-[rgba(88,200,227,0.1)] hover:text-[#58c8e3]"
                 >
                   {item.label}
                 </button>
@@ -103,8 +114,10 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const isHomePage = pathname === "/";
+  const isAdminPage = pathname.startsWith("/admin");
 
   const handleNavigation = (sectionId?: string, href?: string) => {
     if (href) {
@@ -155,6 +168,11 @@ const Navbar = () => {
     { label: "Testimonials", sectionId: "testimonials" },
     { label: "Why Us", sectionId: "why-choose" },
   ];
+
+  // Skip rendering the navbar on admin pages
+  if (isAdminPage) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -237,7 +255,15 @@ const Navbar = () => {
               onClick={() => handleNavigation("hero")}
               className="flex items-center"
             >
-              <Logo height={50} width={180} />
+              {/* Replace Logo component with Image component */}
+              <Image
+                src="/logo.png"
+                alt="SMARTLiNE"
+                width={180}
+                height={50}
+                className="h-12 w-auto"
+                priority
+              />
             </button>
           </motion.div>
 
@@ -264,13 +290,13 @@ const Navbar = () => {
               >
                 <button
                   onClick={() => handleNavigation(item.sectionId)}
-                  className={`text-sm font-medium transition-colors duration-200 ${
+                  className={`text-sm font-medium transition-colors duration-200 hover:text-[#58c8e3] ${
                     activeSection === item.sectionId && isHomePage
-                      ? "text-green-600"
-                      : isScrolled
-                      ? "text-gray-800 hover:text-green-600"
-                      : "text-gray-800 hover:text-green-600"
+                      ? "text-[#58c8e3]"
+                      : "text-gray-800"
                   }`}
+                  onMouseEnter={() => setHoveredItem(item.label)}
+                  onMouseLeave={() => setHoveredItem(null)}
                 >
                   {item.label}
                 </button>
@@ -280,10 +306,8 @@ const Navbar = () => {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 href="/contact"
-                className={`text-sm font-medium transition-colors duration-200 ${
-                  pathname === "/contact"
-                    ? "text-green-600"
-                    : "text-gray-800 hover:text-green-600"
+                className={`text-sm font-medium transition-colors duration-200 hover:text-[#58c8e3] ${
+                  pathname === "/contact" ? "text-[#58c8e3]" : "text-gray-800"
                 }`}
               >
                 Contact
@@ -294,10 +318,21 @@ const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => router.push("/contact?tab=quote")}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-md"
+              className="bg-[#58c8e3] hover:bg-[#3cb0cd] text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 shadow-md"
             >
               Get a Quote
             </motion.button>
+
+            {/* Admin Link - Discreet link at the end of the navbar */}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/admin"
+                className="text-xs text-gray-400 hover:text-[#58c8e3] transition-colors duration-200"
+                title="Admin Dashboard"
+              >
+                Admin
+              </Link>
+            </motion.div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -371,7 +406,7 @@ const Navbar = () => {
                       >
                         <button
                           onClick={() => handleNavigation(item.sectionId)}
-                          className="block text-gray-600 hover:text-green-600 text-sm text-left"
+                          className="block text-gray-600 hover:text-[#58c8e3] text-sm text-left"
                         >
                           {item.label}
                         </button>
@@ -403,7 +438,7 @@ const Navbar = () => {
                       >
                         <button
                           onClick={() => handleNavigation(item.sectionId)}
-                          className="block text-gray-600 hover:text-green-600 text-sm text-left"
+                          className="block text-gray-600 hover:text-[#58c8e3] text-sm text-left"
                         >
                           {item.label}
                         </button>
@@ -422,9 +457,9 @@ const Navbar = () => {
                   >
                     <button
                       onClick={() => handleNavigation(item.sectionId)}
-                      className={`block py-2 text-left w-full text-gray-800 hover:text-green-600 font-medium border-b border-gray-100 ${
+                      className={`block py-2 text-left w-full text-gray-800 hover:text-[#58c8e3] font-medium border-b border-gray-100 ${
                         activeSection === item.sectionId && isHomePage
-                          ? "text-green-600"
+                          ? "text-[#58c8e3]"
                           : ""
                       }`}
                     >
@@ -442,8 +477,8 @@ const Navbar = () => {
                   <Link
                     href="/contact"
                     onClick={() => setIsOpen(false)}
-                    className={`block py-2 text-left w-full text-gray-800 hover:text-green-600 font-medium border-b border-gray-100 ${
-                      pathname === "/contact" ? "text-green-600" : ""
+                    className={`block py-2 text-left w-full text-gray-800 hover:text-[#58c8e3] font-medium border-b border-gray-100 ${
+                      pathname === "/contact" ? "text-[#58c8e3]" : ""
                     }`}
                   >
                     Contact
@@ -459,10 +494,26 @@ const Navbar = () => {
                     router.push("/contact?tab=quote");
                     setIsOpen(false);
                   }}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-md text-sm font-medium transition-colors duration-200 shadow-md mt-4"
+                  className="w-full bg-[#58c8e3] hover:bg-[#3cb0cd] text-white px-4 py-3 rounded-md text-sm font-medium transition-colors duration-200 shadow-md mt-4"
                 >
                   Get a Quote
                 </motion.button>
+
+                {/* Admin link for mobile - at the very bottom and discreet */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.9 }}
+                  className="mt-4 pt-4 border-t border-gray-100 text-center"
+                >
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsOpen(false)}
+                    className="text-xs text-gray-400 hover:text-[#58c8e3] transition-colors duration-200"
+                  >
+                    Admin Access
+                  </Link>
+                </motion.div>
               </div>
             </div>
           </motion.div>
