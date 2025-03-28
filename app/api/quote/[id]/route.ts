@@ -2,18 +2,16 @@
 import { mongoDBService } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
-interface Params {
-  params: {
-    id: string;
-  };
-}
-
 /**
  * GET handler for retrieving a single quote submission by ID
  */
-export async function GET(request: NextRequest, { params }: Params) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
   try {
-    const id = params.id;
     const quote = await mongoDBService.getQuoteById(id);
 
     if (!quote) {
@@ -25,7 +23,7 @@ export async function GET(request: NextRequest, { params }: Params) {
 
     return NextResponse.json(quote);
   } catch (error: any) {
-    console.error(`Error fetching quote with ID ${params.id}:`, error);
+    console.error(`Error fetching quote with ID ${id}:`, error);
     return NextResponse.json(
       { error: error.message || "Internal server error" },
       { status: 500 }
@@ -36,9 +34,13 @@ export async function GET(request: NextRequest, { params }: Params) {
 /**
  * PUT handler for updating a quote submission
  */
-export async function PUT(request: NextRequest, { params }: Params) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
   try {
-    const id = params.id;
     const data = await request.json();
 
     const updatedQuote = await mongoDBService.updateQuote(id, data);
@@ -52,7 +54,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
     return NextResponse.json(updatedQuote);
   } catch (error: any) {
-    console.error(`Error updating quote with ID ${params.id}:`, error);
+    console.error(`Error updating quote with ID ${id}:`, error);
     return NextResponse.json(
       { error: error.message || "Internal server error" },
       { status: 500 }
@@ -63,9 +65,13 @@ export async function PUT(request: NextRequest, { params }: Params) {
 /**
  * DELETE handler for removing a quote submission
  */
-export async function DELETE(request: NextRequest, { params }: Params) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
   try {
-    const id = params.id;
     const success = await mongoDBService.deleteQuote(id);
 
     if (!success) {
@@ -80,7 +86,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       message: "Quote submission deleted successfully",
     });
   } catch (error: any) {
-    console.error(`Error deleting quote with ID ${params.id}:`, error);
+    console.error(`Error deleting quote with ID ${id}:`, error);
     return NextResponse.json(
       { error: error.message || "Internal server error" },
       { status: 500 }
