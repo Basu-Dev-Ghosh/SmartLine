@@ -9,6 +9,7 @@ import ValuedCustomersLogos from "./components/ValuedCustomersLogos";
 import WhyChooseSmartline from "./components/WhyChooseSmartline";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import FAQ from "./components/FAQ";
 
 export default function Home() {
   return (
@@ -29,6 +30,9 @@ export default function Home() {
         </section>
         <section id="customers">
           <MajorCustomers />
+        </section>
+        <section id="faq">
+          <FAQ />
         </section>
         <section id="valued-customers">
           <ValuedCustomersLogos />

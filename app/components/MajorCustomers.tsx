@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 // Brand colors
 const BRAND_COLORS = {
   primary: "#58c8e3", // smartline blue
-  secondary: "#dc2626", // smartline red
+  secondary: "#58c8e3", // smartline red
 };
 
 interface CustomerSector {
@@ -397,7 +397,7 @@ const MajorCustomers = () => {
                 </svg>
               </div>
               <span
-                className="font-medium"
+                className="font-large"
                 style={{ color: BRAND_COLORS.secondary }}
               >
                 Ather Energy (EV Charger)

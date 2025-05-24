@@ -57,7 +57,7 @@ const ProductsShowcase = () => {
           name: "Online UPS",
           description:
             "Reliable uninterruptible power supply solutions for critical applications",
-          image: "/products/ups.jpg",
+          image: "/products/ups.png",
           features: [
             "Pure Sine Wave Output",
             "Double Conversion Technology",
@@ -99,7 +99,7 @@ const ProductsShowcase = () => {
               name: "SMF Battery",
               description:
                 "Sealed Maintenance Free batteries for reliable backup power",
-              image: "/products/smf-battery.jpg",
+              image: "/products/smf-battery.jpeg",
               features: [
                 "Maintenance Free",
                 "Long Service Life",
@@ -136,7 +136,7 @@ const ProductsShowcase = () => {
               name: "Inverter Battery",
               description:
                 "Reliable batteries for home and office inverter systems",
-              image: "/products/inverter-battery.jpg",
+              image: "/products/inverter-battery-1.jpeg",
               features: [
                 "Deep Cycle Technology",
                 "Low Maintenance",
@@ -154,7 +154,7 @@ const ProductsShowcase = () => {
               id: "industrial-battery-1",
               name: "2V Industrial Battery",
               description: "Heavy-duty 2V cells for industrial applications",
-              image: "/products/industrial-battery.jpg",
+              image: "/products/inverter-battery.jpg",
               features: [
                 "Long Service Life",
                 "High Current Capability",
@@ -196,7 +196,7 @@ const ProductsShowcase = () => {
               id: "solar-panel-1",
               name: "Solar Panel",
               description: "High-efficiency solar panels for energy generation",
-              image: "/products/solar-panel.jpg",
+              image: "/products/solar-panel.jpeg",
               features: [
                 "High Conversion Efficiency",
                 "Weather Resistant",
@@ -214,7 +214,7 @@ const ProductsShowcase = () => {
               id: "solar-battery-1",
               name: "Solar Battery",
               description: "Energy storage solutions for solar power systems",
-              image: "/products/solar-battery.jpg",
+              image: "/products/solar-battery.webp",
               features: [
                 "Deep Cycle Technology",
                 "High Charge Acceptance",
@@ -233,7 +233,7 @@ const ProductsShowcase = () => {
               name: "Solar Inverter",
               description:
                 "Convert solar DC power to AC for use in homes and businesses",
-              image: "/products/solar-inverter.jpg",
+              image: "/products/solar-inverter.jpeg",
               features: [
                 "High Efficiency",
                 "MPPT Technology",
@@ -253,7 +253,7 @@ const ProductsShowcase = () => {
           id: "ats-1",
           name: "Automatic Transfer Switch",
           description: "Seamlessly switch between power sources",
-          image: "/products/ats.jpg",
+          image: "/products/ats.jpeg",
           features: [
             "Fast Transfer Time",
             "Reliable Operation",
@@ -276,7 +276,7 @@ const ProductsShowcase = () => {
               name: "Isolation Transformer",
               description:
                 "Provide galvanic isolation between electrical circuits",
-              image: "/products/isolation-transformer.jpg",
+              image: "/products/isolation-transformer.jpeg",
               features: [
                 "Noise Filtering",
                 "Galvanic Isolation",

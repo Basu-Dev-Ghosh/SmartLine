@@ -5,9 +5,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-// Brand colors
+// Brand colors matching Smartline theme
 const BRAND_COLORS = {
-  primary: "#58c8e3", // smartline blue
+  primary: "#58c8e3", // smartline cyan/teal
   secondary: "#dc2626", // smartline red
 };
 
@@ -21,61 +21,121 @@ interface Partner {
 
 const PartnerBrands = () => {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<"all" | "oem" | "si">("all");
+  const [activeTab, setActiveTab] = useState<"oem" | "si">("oem");
 
   const partners: Partner[] = [
-    // OEM Partners
+    // OEM Partners (as specified by client)
     {
-      id: "schneider",
+      id: "fuji-electric",
+      name: "Fuji Electric India Private Limited",
+      logo: "/partners/fuji-electric.png", // Not available yet
+      type: "oem",
+      description:
+        "Leading manufacturer of power electronics and industrial systems.",
+    },
+    {
+      id: "schneider-electric",
       name: "Schneider Electric",
-      logo: "/partners/schneider.jpg",
+      logo: "/partners/schneider.jpg", // Available
       type: "oem",
       description:
         "Global leader in energy management and automation solutions.",
     },
     {
-      id: "exide",
-      name: "Amara Raja / Exide",
-      logo: "/partners/exide.jpg",
+      id: "amara-raja",
+      name: "Amara Raja Energy & Mobility Limited",
+      logo: "/partners/amara-raja.png", // Available
       type: "oem",
-      description: "Innovative battery solutions for diverse industrial needs.",
+      description: "Advanced energy storage and mobility solutions provider.",
+    },
+    {
+      id: "exide",
+      name: "Exide",
+      logo: "/partners/exide.jpg", // Available
+      type: "oem",
+      description: "Trusted battery technology and energy storage solutions.",
+    },
+    {
+      id: "apc",
+      name: "APC",
+      logo: "/partners/apc.png", // Available
+      type: "oem",
+      description:
+        "Uninterruptible power supply and surge protection solutions.",
+    },
+    {
+      id: "delta",
+      name: "Delta",
+      logo: "/partners/delta.png", // Available
+      type: "oem",
+      description: "Power and thermal management solutions provider.",
+    },
+    {
+      id: "vertiv",
+      name: "Vertiv (Earlier Known as Emerson)",
+      logo: "/partners/vertiv.png", // Available
+      type: "oem",
+      description: "Critical digital infrastructure and continuity solutions.",
+    },
+    {
+      id: "waaree",
+      name: "Waaree Energies Ltd",
+      logo: "/partners/waaree.png", // Not available yet
+      type: "oem",
+      description: "Solar energy solutions and renewable power systems.",
     },
     {
       id: "relicell",
       name: "Relicell",
-      logo: "/partners/relicell.jpg",
+      logo: "/partners/relicell.jpg", // Available
       type: "oem",
-      description:
-        "Advanced power storage technologies for critical applications.",
+      description: "Advanced battery technology and power storage solutions.",
     },
-    {
-      id: "apc",
-      name: "APC / Delta / Emerson",
-      logo: "/partners/apc.jpg",
-      type: "oem",
-      description: "Cutting-edge power and cooling infrastructure solutions.",
-    },
-    // SI Partners
-    {
-      id: "accel",
-      name: "Accel IT Services",
-      logo: "/partners/accel.jpg",
-      type: "si",
-      description: "Comprehensive IT infrastructure and integration expertise.",
-    },
-    {
-      id: "cms",
-      name: "CMS Computers",
-      logo: "/partners/cms.jpg",
-      type: "si",
-      description: "Enterprise-grade IT solutions and system integration.",
-    },
+
+    // SI Partners (as specified by client)
     {
       id: "hp",
-      name: "Hewlett Packard",
-      logo: "/partners/hp.jpg",
+      name: "Hewlett Packard (HP)",
+      logo: "/partners/hp.jpg", // Available
       type: "si",
-      description: "Global technology solutions and digital transformation.",
+      description:
+        "Global technology solutions and digital transformation services.",
+    },
+    {
+      id: "future-netwings",
+      name: "Future Netwings Solutions Private Limited",
+      logo: "/partners/future-netwings.png", // Not available yet
+      type: "si",
+      description: "Comprehensive IT infrastructure and networking solutions.",
+    },
+    {
+      id: "accel-it",
+      name: "Accel IT Services",
+      logo: "/partners/accel.jpg", // Available (assuming accel.jpg is for Accel IT)
+      type: "si",
+      description: "Enterprise IT solutions and system integration services.",
+    },
+    {
+      id: "cms-computers",
+      name: "CMS Computers",
+      logo: "/partners/cms-computers.png", // Not available yet
+      type: "si",
+      description: "Complete computer solutions and IT support services.",
+    },
+    {
+      id: "team-computer",
+      name: "Team Computer",
+      logo: "/partners/team-computer.png", // Not available yet
+      type: "si",
+      description:
+        "Professional IT services and technology solutions provider.",
+    },
+    {
+      id: "bharat-it",
+      name: "Bharat IT",
+      logo: "/partners/bharat-it.png", // Available (assuming bharat.jpg is for Bharat IT)
+      type: "si",
+      description: "Integrated IT solutions and digital services provider.",
     },
   ];
 
@@ -86,7 +146,7 @@ const PartnerBrands = () => {
       opacity: 1,
       transition: {
         delayChildren: 0.3,
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
       },
     },
   };
@@ -105,10 +165,9 @@ const PartnerBrands = () => {
   };
 
   // Filter partners based on active tab
-  const filteredPartners =
-    activeTab === "all"
-      ? partners
-      : partners.filter((partner) => partner.type === activeTab);
+  const filteredPartners = partners.filter(
+    (partner) => partner.type === activeTab
+  );
 
   return (
     <section id="partners" className="py-16 bg-gray-50">
@@ -121,16 +180,19 @@ const PartnerBrands = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
             Our Trusted{" "}
-            <span style={{ color: BRAND_COLORS.primary }}>Partners</span>
+            <span className="bg-gradient-to-r from-cyan-500 to-teal-500 bg-clip-text text-transparent">
+              Partners
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Collaborating with industry leaders to deliver innovative solutions
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Collaborating with industry-leading OEM and SI partners to deliver
+            comprehensive power solutions and exceptional service quality
           </p>
         </motion.div>
 
-        {/* Partner Type Tabs */}
+        {/* Partner Type Tabs - Only OEM and SI */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -138,28 +200,48 @@ const PartnerBrands = () => {
           viewport={{ once: true }}
           className="flex justify-center mb-12"
         >
-          <div className="inline-flex bg-white rounded-lg shadow-md">
+          <div className="inline-flex bg-white rounded-xl shadow-lg border border-gray-200">
             {[
-              { value: "all", label: "All Partners" },
-              { value: "oem", label: "OEM Partners" },
-              { value: "si", label: "SI Partners" },
+              {
+                value: "oem",
+                label: "OEM Partners",
+                count: partners.filter((p) => p.type === "oem").length,
+              },
+              {
+                value: "si",
+                label: "SI Partners",
+                count: partners.filter((p) => p.type === "si").length,
+              },
             ].map((tab, index) => (
               <button
                 key={tab.value}
-                onClick={() => setActiveTab(tab.value as "all" | "oem" | "si")}
-                className={`px-6 py-3 text-sm font-medium transition-all duration-300 ${
-                  index === 0 ? "rounded-l-lg" : ""
-                } ${index === 2 ? "rounded-r-lg" : ""} ${
+                onClick={() => setActiveTab(tab.value as "oem" | "si")}
+                className={`px-8 py-4 text-sm font-semibold transition-all duration-300 relative ${
+                  index === 0 ? "rounded-l-xl" : "rounded-r-xl"
+                } ${
                   activeTab === tab.value
-                    ? "text-white"
-                    : "text-gray-700 hover:bg-gray-100"
+                    ? "text-white shadow-md"
+                    : "text-gray-700 hover:bg-gray-50"
                 }`}
                 style={{
-                  backgroundColor:
-                    activeTab === tab.value ? BRAND_COLORS.primary : "",
+                  background:
+                    activeTab === tab.value
+                      ? "linear-gradient(135deg, #58c8e3, #22d3ee)"
+                      : "transparent",
                 }}
               >
-                {tab.label}
+                <span className="flex flex-col items-center">
+                  <span>{tab.label}</span>
+                  <span
+                    className={`text-xs mt-1 ${
+                      activeTab === tab.value
+                        ? "text-white/80"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    ({tab.count})
+                  </span>
+                </span>
               </button>
             ))}
           </div>
@@ -170,37 +252,86 @@ const PartnerBrands = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          key={activeTab} // Re-animate when tab changes
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
         >
           {filteredPartners.map((partner) => (
             <motion.div
               key={partner.id}
               variants={itemVariants}
               whileHover={{
-                y: -5,
-                boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)",
+                y: -8,
+                boxShadow: "0 20px 40px -5px rgba(0,0,0,0.15)",
               }}
-              className="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 border border-gray-100"
+              className="bg-white rounded-2xl shadow-md overflow-hidden transform transition-all duration-300 border border-gray-100 hover:border-cyan-200"
             >
               {/* Partner Logo */}
-              <div className="h-36 flex items-center justify-center bg-gray-50 border-b border-gray-100 p-4">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="max-h-20 max-w-full object-contain"
-                />
+              <div className="h-32 flex items-center justify-center bg-gradient-to-br from-gray-50 to-white border-b border-gray-100 p-6">
+                {/* Check if we have the actual logo file */}
+                {[
+                  "schneider.jpg",
+                  "amara-raja.png",
+                  "exide.jpg",
+                  "apc.png",
+                  "delta.png",
+                  "vertiv.png",
+                  "relicell.jpg",
+                  "hp.jpg",
+                  "accel.jpg",
+                ].includes(partner.logo.split("/").pop() ?? "") ? (
+                  <img
+                    src={partner.logo}
+                    alt={`${partner.name} logo`}
+                    className="max-h-16 max-w-full object-contain filter hover:scale-110 transition-transform duration-300"
+                    onError={(e) => {
+                      // If image fails to load, show placeholder
+                      e.currentTarget.style.display = "none";
+                      if (e.currentTarget.nextElementSibling) {
+                        (
+                          e.currentTarget.nextElementSibling as HTMLElement
+                        ).style.display = "block";
+                      }
+                    }}
+                  />
+                ) : null}
+
+                {/* Placeholder for missing logos */}
+                <div
+                  className="text-center"
+                  style={{
+                    display: [
+                      "schneider.jpg",
+                      "amara-raja.png",
+                      "exide.jpg",
+                      "apc.png",
+                      "delta.png",
+                      "vertiv.png",
+                      "relicell.jpg",
+                      "hp.jpg",
+                      "accel.jpg",
+                    ].includes(partner.logo.split("/").pop() ?? "")
+                      ? "none"
+                      : "block",
+                  }}
+                >
+                  <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-cyan-100 to-teal-100 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-cyan-600">
+                      {partner.name.charAt(0)}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* Partner Details */}
-              <div className="p-4">
-                <h3 className="text-base font-semibold text-gray-800 mb-2 line-clamp-1">
+              <div className="p-5">
+                <h3 className="text-sm font-bold text-gray-800 mb-2 line-clamp-2 leading-tight">
                   {partner.name}
                 </h3>
-                <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+                <p className="text-xs text-gray-600 mb-4 line-clamp-3 leading-relaxed">
                   {partner.description}
                 </p>
                 <div
-                  className="rounded-md px-3 py-1 text-xs inline-block"
+                  className="rounded-full px-3 py-1 text-xs font-medium inline-block"
                   style={{
                     backgroundColor: `rgba(88, 200, 227, 0.1)`,
                     color: BRAND_COLORS.primary,
@@ -213,19 +344,21 @@ const PartnerBrands = () => {
           ))}
         </motion.div>
 
-        {/* Strategic Partnership Advantages */}
+        {/* Partnership Benefits Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-16 rounded-lg overflow-hidden shadow-lg border border-gray-100"
+          className="mt-16 rounded-2xl overflow-hidden shadow-lg border border-gray-100"
           style={{ borderTop: `4px solid ${BRAND_COLORS.primary}` }}
         >
           <div className="bg-white p-8">
             <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-              Strategic Partnership{" "}
-              <span style={{ color: BRAND_COLORS.primary }}>Advantages</span>
+              Partnership{" "}
+              <span className="bg-gradient-to-r from-cyan-500 to-teal-500 bg-clip-text text-transparent">
+                Excellence
+              </span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -233,7 +366,6 @@ const PartnerBrands = () => {
                 {
                   icon: (
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       className="h-8 w-8"
                       viewBox="0 0 24 24"
                       fill="none"
@@ -247,14 +379,13 @@ const PartnerBrands = () => {
                       />
                     </svg>
                   ),
-                  title: "Proven Expertise",
+                  title: "Certified Excellence",
                   description:
-                    "Access to top-tier technical knowledge and industry insights.",
+                    "All partners meet stringent quality and performance standards.",
                 },
                 {
                   icon: (
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       className="h-8 w-8"
                       viewBox="0 0 24 24"
                       fill="none"
@@ -270,12 +401,11 @@ const PartnerBrands = () => {
                   ),
                   title: "Integrated Solutions",
                   description:
-                    "Seamless compatibility across multiple vendor technologies.",
+                    "Seamless integration across OEM and SI partner technologies.",
                 },
                 {
                   icon: (
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
                       className="h-8 w-8"
                       viewBox="0 0 24 24"
                       fill="none"
@@ -289,14 +419,14 @@ const PartnerBrands = () => {
                       />
                     </svg>
                   ),
-                  title: "Cost Efficiency",
+                  title: "Value Engineering",
                   description:
-                    "Competitive pricing through strategic partnerships.",
+                    "Optimized solutions delivering maximum value for your investment.",
                 },
-              ].map((advantage, index) => (
+              ].map((benefit, index) => (
                 <div
                   key={index}
-                  className="rounded-lg p-6 flex flex-col items-center text-center transition-all border border-gray-100 bg-white shadow-sm hover:shadow-md"
+                  className="rounded-xl p-6 flex flex-col items-center text-center transition-all border border-gray-100 bg-gradient-to-br from-white to-gray-50 hover:shadow-lg"
                 >
                   <div
                     className="rounded-full p-4 mb-4"
@@ -305,13 +435,13 @@ const PartnerBrands = () => {
                       color: BRAND_COLORS.primary,
                     }}
                   >
-                    {advantage.icon}
+                    {benefit.icon}
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-3">
-                    {advantage.title}
+                    {benefit.title}
                   </h3>
-                  <p className="text-gray-600 text-sm">
-                    {advantage.description}
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {benefit.description}
                   </p>
                 </div>
               ))}
@@ -323,12 +453,13 @@ const PartnerBrands = () => {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => router.push("/contact")}
-                className="text-white px-8 py-3 rounded-md text-lg font-medium shadow-md hover:shadow-lg transition-all inline-flex items-center group"
-                style={{ backgroundColor: BRAND_COLORS.primary }}
+                className="text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all inline-flex items-center group"
+                style={{
+                  background: "linear-gradient(135deg, #58c8e3, #22d3ee)",
+                }}
               >
-                Become a Partner
+                Partner With Us
                 <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform"
                   viewBox="0 0 24 24"
                   fill="none"

@@ -49,7 +49,7 @@ const Footer = () => {
                 onClick={() => scrollToSection("hero")}
               >
                 <Image
-                  src="/logo.png"
+                  src="/logo.bmp"
                   alt="SMARTLiNE Logo"
                   width={140}
                   height={140}
@@ -91,7 +91,7 @@ const Footer = () => {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     ></path>
                   </svg>
-                  221 Jodhpur Garden, Kolkata: 700 045
+                  221, Jodhpur Garden, Kolkata 700 045
                 </p>
                 <p className="flex items-center">
                   <svg
@@ -108,7 +108,24 @@ const Footer = () => {
                       d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                     ></path>
                   </svg>
-                  7439031293 / 9831596920 / 9831062430
+                  Ph: 24174859 / 9007021200
+                </p>
+                <p className="flex items-center">
+                  <svg
+                    className="w-4 h-4 mr-2 text-[#58c8e3]"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 2.003c2.717 0 5.056.215 6.122.64l.715.284c.99.396 1.611 1.33 1.611 2.42v3.653c0 6.115-5.538 11.176-10.334 11.95a1.292 1.292 0 01-.428 0C4.482 20.176-1.056 15.115-1.056 9v-3.653c0-1.09.622-2.024 1.61-2.42l.716-.284C2.336 2.218 4.675 2.003 7.392 2.003z"
+                    ></path>
+                  </svg>
+                  M: 7439031293 / 9831596920
                 </p>
                 <p className="flex items-center">
                   <svg
@@ -131,7 +148,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links - Changed from Services to include section links */}
+          {/* Quick Links - Updated to include FAQ */}
           <div>
             <h4 className="text-lg font-medium mb-6 border-b border-gray-700 pb-2">
               Quick Links
@@ -151,6 +168,9 @@ const Footer = () => {
                 <button onClick={() => scrollToSection("partners")}>
                   Partner Brands
                 </button>
+              </li>
+              <li className="hover:text-[#58c8e3] transition-colors">
+                <Link href="/faq">FAQ</Link>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("customers")}>
@@ -191,37 +211,37 @@ const Footer = () => {
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("products")}>
-                  Battery Solutions
+                  SMF Battery Solutions
                 </button>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("products")}>
-                  Solar Products
+                  Isolation Transformer
                 </button>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("products")}>
-                  Automation Products
+                  Automatic Transfer Switch
+                </button>
+              </li>
+              <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
+                <button onClick={() => scrollToSection("products")}>
+                  Waaree Solar Products
+                </button>
+              </li>
+              <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
+                <button onClick={() => scrollToSection("products")}>
+                  Fuji UPS Range
                 </button>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("services")}>
-                  UPS & Battery Services
+                  UPS & Battery AMC
                 </button>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("services")}>
-                  Power Audit
-                </button>
-              </li>
-              <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
-                <button onClick={() => scrollToSection("services")}>
-                  Solar Solutions
-                </button>
-              </li>
-              <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
-                <button onClick={() => scrollToSection("services")}>
-                  AMC Services
+                  Power Audit Services
                 </button>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors">
@@ -291,7 +311,7 @@ const Footer = () => {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                <span>Expertise</span>
+                <span>20+ Years Expertise</span>
               </div>
               <div
                 className="flex items-center text-gray-300 cursor-pointer hover:text-[#58c8e3] transition-colors"
@@ -311,7 +331,7 @@ const Footer = () => {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                <span>Availability</span>
+                <span>24×7 Availability</span>
               </div>
               <div
                 className="flex items-center text-gray-300 cursor-pointer hover:text-[#58c8e3] transition-colors"
@@ -331,7 +351,7 @@ const Footer = () => {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                <span>Flexibility</span>
+                <span>500+ Clients Served</span>
               </div>
               <div
                 className="flex items-center text-gray-300 cursor-pointer hover:text-[#58c8e3] transition-colors"
@@ -351,7 +371,7 @@ const Footer = () => {
                     d="M5 13l4 4L19 7"
                   ></path>
                 </svg>
-                <span>Speed</span>
+                <span>99.9% Uptime</span>
               </div>
             </div>
           </div>
@@ -424,7 +444,7 @@ const Footer = () => {
           </div>
 
           <div className="mt-6 text-center text-gray-400 text-xs">
-            <p>Always On Line ( 24 x 7 x 365 )</p>
+            <p>Always Online, Always Ready ( 24 × 7 × 365 )</p>
           </div>
         </div>
       </div>
