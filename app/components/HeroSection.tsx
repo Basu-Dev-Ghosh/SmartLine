@@ -294,7 +294,7 @@ const HeroSection = () => {
             </motion.h1>
             <motion.p
               variants={itemVariants}
-              className="text-slate-600 text-md leading-relaxed mb-8 max-w-xl"
+              className="text-slate-600 text-xl leading-relaxed mb-8 max-w-xl"
             >
               SMARTLiNE is a leading provider of UPS Services, Chargers,
               Battery, Solar solutions and Power Audit services. With expertise
@@ -428,7 +428,7 @@ const HeroSection = () => {
           variants={statsVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 border-t-2 pt-12"
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10 border-t-2 "
           style={{ borderColor: `rgba(88, 200, 227, 0.2)` }}
         >
           {[

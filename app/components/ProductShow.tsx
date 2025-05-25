@@ -432,7 +432,10 @@ const ProductsShowcase = () => {
 
   // Client-side render with full animations
   return (
-    <section id="products" className="py-16 bg-white relative overflow-hidden">
+    <section
+      id="products"
+      className="py-16  bg-[#D1EFF9] relative overflow-hidden"
+    >
       {/* Background decorative elements */}
       <div
         className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 rounded-full opacity-20"
@@ -542,13 +545,13 @@ const ProductsShowcase = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-8 mt-16"
         >
           {getCurrentProducts().map((product, index) => (
             <motion.div
               key={product.id}
               variants={itemVariants}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+              className="bg-white mx-auto rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100"
               onMouseEnter={() => setHoveredProduct(product.id)}
               onMouseLeave={() => setHoveredProduct(null)}
               whileHover={{ y: -5 }}
@@ -567,7 +570,7 @@ const ProductsShowcase = () => {
                         <img
                           src={product.image}
                           alt=""
-                          className="opacity-0 absolute w-px h-px"
+                          className="opacity-0 absolute w-px h-px object-cover"
                           onError={() => handleImageError(product.id)}
                         />
                       </>
@@ -647,33 +650,11 @@ const ProductsShowcase = () => {
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 mx-auto w-full">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {product.name}
                 </h3>
                 <p className="text-gray-600 mb-4">{product.description}</p>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center font-medium"
-                  style={{ color: BRAND_COLORS.primary }}
-                >
-                  Learn More
-                  <svg
-                    className="w-5 h-5 ml-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    ></path>
-                  </svg>
-                </motion.button>
               </div>
             </motion.div>
           ))}
