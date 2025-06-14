@@ -34,9 +34,9 @@ export default function Home() {
         <section id="faq">
           <FAQ />
         </section>
-        <section id="testimonials">
+        {/* <section id="testimonials">
           <CustomerTestimonials />
-        </section>
+        </section> */}
         <section id="why-choose">
           <WhyChooseSmartline />
         </section>
