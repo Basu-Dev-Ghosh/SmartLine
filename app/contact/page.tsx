@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 
-
 // Define brand colors as constants for easy maintenance
 const BRAND_COLORS = {
   smartlineBlue: "#58c8e3",
@@ -752,8 +751,6 @@ const ContactPage = () => {
                 <p className="text-gray-600">9831596920 / 9831062430</p>
               </div>
             </motion.div>
-            // Continuation of app/contact/page.tsx from previous snippet //
-            This is the final part of the contact page component
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -935,7 +932,6 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
-
     </>
   );
 };

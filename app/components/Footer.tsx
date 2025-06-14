@@ -190,11 +190,6 @@ const Footer = () => {
                 <button onClick={() => scrollToSection("faq")}>FAQ</button>
               </li>
               <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
-                <button onClick={() => scrollToSection("testimonials")}>
-                  Testimonials
-                </button>
-              </li>
-              <li className="hover:text-[#58c8e3] transition-colors cursor-pointer">
                 <button onClick={() => scrollToSection("why-choose")}>
                   Why Choose Us
                 </button>

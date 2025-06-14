@@ -28,7 +28,7 @@ const PartnerBrands = () => {
     {
       id: "fuji-electric",
       name: "Fuji Electric India Private Limited",
-      logo: "/partners/fuji-electric.png", // Not available yet
+      logo: "/partners/fuji.jpg", // Not available yet
       type: "oem",
       description:
         "Leading manufacturer of power electronics and industrial systems.",
