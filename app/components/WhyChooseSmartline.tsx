@@ -55,6 +55,24 @@ const WhyChooseSmartline = () => {
   // Updated strengths based on client's "Why Us" document
   const strengths = [
     {
+      id: "revenue-focus",
+      title: "UPS & Solar Revenue Focus",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        >
+          <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+      description:
+        "The company primarily earns revenue from UPS-related and solar-related services, ensuring specialized expertise and focused solutions.",
+    },
+    {
       id: "cost-optimization",
       title: "Cost Optimization",
       icon: (
@@ -514,57 +532,6 @@ const WhyChooseSmartline = () => {
           </div>
         </motion.div>
 
-        {/* Key Metrics */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-        >
-          {[
-            {
-              number: "20+",
-              label: "Years Experience",
-              sublabel: "Industry Expertise",
-            },
-            {
-              number: "500+",
-              label: "Clients Served",
-              sublabel: "Across 12+ Sectors",
-            },
-            {
-              number: "99.9%",
-              label: "Uptime Guarantee",
-              sublabel: "Reliable Solutions",
-            },
-            {
-              number: "24/7",
-              label: "Expert Support",
-              sublabel: "Always Available",
-            },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-              className="text-center rounded-2xl p-8 border transform transition-all duration-300 hover:shadow-lg bg-white"
-              style={{
-                borderColor: `rgba(88, 200, 227, 0.2)`,
-              }}
-            >
-              <h3
-                className="text-4xl md:text-5xl font-bold mb-2"
-                style={{ color: BRAND_COLORS.primary }}
-              >
-                {stat.number}
-              </h3>
-              <p className="text-gray-800 font-semibold">{stat.label}</p>
-              <p className="text-gray-600 text-sm mt-1">{stat.sublabel}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -612,7 +579,7 @@ const WhyChooseSmartline = () => {
                 </svg>
               </motion.button>
             </Link>
-            <Link href="/faq">
+            <Link href="#faq">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

@@ -1,13 +1,13 @@
 // app/components/MajorCustomers.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 // Brand colors
 const BRAND_COLORS = {
   primary: "#58c8e3", // smartline blue
-  secondary: "#58c8e3", // smartline red
+  secondary: "#dc2626", // smartline red
 };
 
 interface CustomerSector {
@@ -28,214 +28,144 @@ const MajorCustomers = () => {
     }
   };
 
+  // Reset expanded sector when changing tabs
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    setExpandedSector(null);
+  };
+
+  // Also reset expanded sector whenever activeTab changes (as a safety measure)
+  useEffect(() => {
+    setExpandedSector(null);
+    console.log("Tab changed to:", activeTab, "Expanded sector reset to null");
+  }, [activeTab]);
+
   const sectors: CustomerSector[] = [
     {
-      id: "banking",
-      name: "Banking Sector",
+      id: "medical",
+      name: "Medical Sector",
       customers: [
-        "SBI",
-        "Axis Bank",
-        "IDBI Bank",
-        "Allahabad Bank",
-        "ICICI Bank",
-        "HDFC Bank",
-        "RBI",
-        "UCO Bank",
-        "Bank of India",
-        "Central Bank",
-        "UKBG",
-        "UBI",
-        "OBC",
+        "Indian Institute of Liver and Digestive Sciences (IILDS)",
+        "Desun Hospital (PN Memorial Neurocentre & Research Institute Limited)",
+        "Apollo Multispeciality Hospitals Limited",
+        "CMRI (Calcutta Medical Research Institute)",
+        "Medica Superspecialty Hospital",
+        "Dr. SS Chatterjee Heart Centre",
+        "Microlap Nursing Home",
+        "Nibedita Nursing Home",
+        "RN Tagore Hospital",
       ],
     },
     {
-      id: "public",
-      name: "Public Sector",
+      id: "pwd-hospitals",
+      name: "Various Hospitals under PWD",
       customers: [
-        "Sail",
-        "DPL",
-        "Indian Oil",
-        "BPCL",
-        "DVC",
-        "BHEL",
-        "NTPC",
-        "ONG",
-      ],
-    },
-    {
-      id: "telecom",
-      name: "Telecom Sector",
-      customers: ["Airtel", "Vodafone", "Simoco", "BSNL", "Aircel"],
-    },
-    {
-      id: "retail",
-      name: "Retail Sector",
-      customers: [
-        "Future Group",
-        "Spencer",
-        "More",
-        "Shopper Stop",
-        "South City",
-        "Mobile Store",
-        "Shreeram Ozone",
-        "Tanishk",
-        "Pantaloons",
-        "Avani mall",
+        "Nil Ratan Sircar College & Hospital",
+        "Calcutta National Medical College & Hospital",
+        "Dr. JR Dhar Bangaon SD Hospital",
+        "Diamond Harbour Medical College & Hospital",
+        "Bhatpara General Hospital",
+        "Mathabhanga Sub Divisional Hospital",
+        "Mekhliganj Sub Divisional Hospital",
+        "Tufanganj Sub Divisional Hospital",
+        "MJN Medical College & Hospital",
+        "Alipurduar District Hospital",
+        "Dinhata Sub Divisional Hospital",
+        "Coochbehar Circuit House",
+        "North Bengal Medical College & Hospital",
       ],
     },
     {
       id: "education",
       name: "Education Sector",
       customers: [
-        "ICFAI",
-        "ICA",
+        "NIFT (National Institute of Fashion Technology)",
+        "Calcutta University",
         "Jadavpur University",
-        "CMERI",
-        "Rahbadh Engg College",
-        "Saha Institute",
-        "NIT Durgapur",
-        "NHSM",
-        "Techno India",
+        "NSHM Knowledge Campus",
+        "IIT Kharagpur",
+        "Army Institute of Management Kolkata",
+        "Neotia University (under Ambuja)",
+      ],
+    },
+    {
+      id: "it",
+      name: "IT Sector",
+      customers: [
+        "Rebecca Technologies Private Limited",
+        "Future Netwings Solutions Private Limited",
+        "Milano IT Solutions (P) LTD",
+        "Team Computer Private Limited",
+        "Bharat IT Services Limited",
+        "Tech Elecon",
+        "Accel IT Resources Limited",
+        "MB Software",
+        "Elnova Services",
+      ],
+    },
+    {
+      id: "banking",
+      name: "Banking Sector",
+      customers: [
+        "Uttarbangka Kshetriya Gramin Bank",
+        "Bank of India (Howrah Zone)",
+        "SBI Home Loan & SBI Life",
+        "Malda Cooperative Bank",
+        "Vidyasagar Central Co-operative Bank",
+        "Tamluk Ghatal Central Co-Operative Bank Limited",
+        "The New India Assurance Company Limited (Insurance Sector)",
       ],
     },
     {
       id: "government",
       name: "Government Sector",
       customers: [
-        "Airport Authority of India",
-        "Department of Astronomy",
-        "National Horticultural Board",
-        "Eastern Railway",
-        "South Eastern Railway",
-        "Geological Survey of India",
-        "Webel Technologies",
-        "Dept of Customs",
-        "Samir",
-        "ERTL",
+        "WESEDCL (approx. 30 divisions throughout West Bengal)",
+        "HUDCO (Housing & Urban Development Corporation)",
+        "Indian Space Research Organisation (ISRO)",
+        "Polytechnic Colleges Throughout West Bengal (WTL and Karigari Bhavan)",
+        "ITI Colleges Throughout West Bengal (WTL and Karigari Bhavan)",
       ],
     },
     {
-      id: "courier",
-      name: "Courier Sector",
-      customers: ["AFL", "Blue Dart", "DTDC"],
-    },
-    {
-      id: "it",
-      name: "IT Sector",
+      id: "hospitality",
+      name: "Hospitality/Hotels",
       customers: [
-        "Rolta India",
-        "Globsyn",
-        "Sky Tech",
-        "First source",
-        "Huges",
-        "IXIA",
-        "On Process",
+        "Novotel Kolkata (SPPL Hotels PVT LTD)",
+        "Hotel Hindustan International",
       ],
     },
     {
-      id: "healthcare",
-      name: "Healthcare Sector",
+      id: "corporate",
+      name: "Corporate/Industrial",
       customers: [
-        "Peerless Hospital",
-        "Woodard Hospital",
-        "Mison Hospital",
-        "Apollo Hospital",
-        "B.M Birla Hospital",
-        "West Bengal Health",
-        "CMRI Hospital",
-        "NRS Hospital",
-        "Chattaranjan Hospital",
-        "Barasat Hospital",
-        "Canning Hospital",
-        "Indian Institute of Lever",
+        "India Power Corporation Limited",
+        "Hiranmayee Energy Limited",
+        "Skipper Limited",
+        "Mother Dairy",
+        "Emami Limited",
+        "Amrit Cement",
+        "Leatherman Fashion",
+        "Trend Limited (West Side)",
+        "Globe All India Services",
+        "Graffiti Signgraphics Pvt. Ltd",
       ],
     },
     {
-      id: "consultant",
-      name: "Consultants Sector",
+      id: "realestate",
+      name: "Real Estate/Infrastructure",
       customers: [
-        "M.N Dusdur",
-        "Mecon",
-        "DCL / DCIPS",
-        "Descon Limited",
-        "Lalbmeyer International India",
-        "RITES Ltd",
-        "Nitson & Amitsu Pvt Ltd",
-      ],
-    },
-    {
-      id: "si",
-      name: "System Integrator",
-      customers: [
-        "CMS",
-        "Hewlett Packard",
-        "Sysnet Global",
-        "Accel IT Services",
-        "Bharat IT Services",
-        "Tech Elicon",
-        "PCS",
-      ],
-    },
-    {
-      id: "industrial",
-      name: "Industrial Sector",
-      customers: [
-        "Ultratech Cement",
-        "Simplex",
-        "Ambuja Cement",
-        "Paharpur Cooling Tower",
-        "Hindustan Lever",
-        "L&T",
-        "Balmar Lawrie",
-        "Eveready",
-        "TATA Chemicals",
-        "Philips",
-        "Kesoram Rayon",
-        "ITC",
-        "BEML",
-        "Berjer Paints",
-        "Jenson Nicholson",
-        "Britannia Industries",
-        "Bieco Lawrie",
-        "Tata Tea",
-        "Godrej",
-        "Glaxo",
-        "Blue Star",
-        "Orissa Sponge Iron",
-        "Philips Carbon",
-        "Prax Air",
-        "Schneider Electric",
-        "Shyam Steel",
-        "Bhusan Steel",
-        "Ruchi Soya",
-        "Emami",
-        "Mitsubishi",
-      ],
-    },
-    {
-      id: "ups",
-      name: "UPS OEM Sector",
-      customers: ["DB Power", "Power One", "Emerson", "APC", "Delta"],
-    },
-    {
-      id: "power",
-      name: "Power Sector",
-      customers: [
-        "CESC",
-        "WBSEDCL/WBSETCL",
-        "Power Grid",
-        "Purulia Pump Stored",
-      ],
-    },
-    {
-      id: "other",
-      name: "Other Sector",
-      customers: [
-        "Inox",
-        "Microsec",
-        "Ananda Bazar",
-        "Kodak",
-        "Srijan Reality",
+        "Infinity Benchmark",
+        "Merlin Infinity",
+        "Infinity IT Lagoon",
+        "Infinity Martin Burn Business Park",
+        "Adventz Infinity",
+        "Infinity Godrej Waterside",
+        "Candor Techspace (Brookfield Properties Limited)",
+        "Ambuja Neotia Merline",
+        "Merlin Group",
+        "Astra Tower Rajarhat IT Park",
+        "CBRE Kolkata",
       ],
     },
   ];
@@ -267,7 +197,7 @@ const MajorCustomers = () => {
         {/* Sector filter tabs */}
         <div className="flex flex-wrap justify-center mb-10 gap-2">
           <button
-            onClick={() => setActiveTab("all")}
+            onClick={() => handleTabChange("all")}
             className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
               activeTab === "all"
                 ? "text-white shadow-md"
@@ -284,7 +214,7 @@ const MajorCustomers = () => {
           {sectors.map((sector) => (
             <button
               key={sector.id}
-              onClick={() => setActiveTab(sector.id)}
+              onClick={() => handleTabChange(sector.id)}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
                 activeTab === sector.id
                   ? "text-white shadow-md"
@@ -308,12 +238,15 @@ const MajorCustomers = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className={`border rounded-lg overflow-hidden transition-all duration-300 ${
+              className={`border rounded-lg overflow-hidden transition-all duration-300 flex flex-col ${
                 expandedSector === sector.id ? "shadow-lg" : "shadow-sm"
               }`}
+              style={{
+                gridColumn: expandedSector === sector.id ? "1 / -1" : "auto",
+              }}
             >
               <div
-                className={`px-6 py-4 cursor-pointer ${
+                className={`px-6 py-4 cursor-pointer flex-shrink-0 ${
                   expandedSector === sector.id
                     ? "text-white"
                     : "text-gray-700 hover:text-gray-900 bg-gray-50"
@@ -347,19 +280,32 @@ const MajorCustomers = () => {
                 </div>
               </div>
 
-              {(expandedSector === sector.id || activeTab !== "all") && (
-                <div className="px-6 py-4 bg-white">
-                  <div className="flex flex-wrap gap-2">
+              {/* Only show content when specifically expanded */}
+              {expandedSector === sector.id && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="px-6 py-4 bg-white flex-grow"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {sector.customers.map((customer, index) => (
-                      <span
+                      <div
                         key={`${sector.id}-${index}`}
-                        className="inline-block px-3 py-1 rounded-md text-sm border border-gray-200 bg-gray-50 text-gray-700"
+                        className="flex items-center p-3 rounded-md bg-gray-50 border border-gray-100 hover:bg-gray-100 transition-colors duration-200"
                       >
-                        {customer}
-                      </span>
+                        <div
+                          className="w-2 h-2 rounded-full mr-3 flex-shrink-0"
+                          style={{ backgroundColor: BRAND_COLORS.primary }}
+                        ></div>
+                        <span className="text-sm text-gray-700 font-medium">
+                          {customer}
+                        </span>
+                      </div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               )}
             </motion.div>
           ))}
@@ -376,16 +322,16 @@ const MajorCustomers = () => {
             Authorised Service Provider Of:
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex items-center">
               <div
                 className="w-8 h-8 flex items-center justify-center rounded-full mr-3"
-                style={{ backgroundColor: "rgba(220, 38, 38, 0.1)" }}
+                style={{ backgroundColor: "rgba(88, 200, 227, 0.1)" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4"
-                  style={{ color: BRAND_COLORS.secondary }}
+                  style={{ color: BRAND_COLORS.primary }}
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -396,37 +342,7 @@ const MajorCustomers = () => {
                   />
                 </svg>
               </div>
-              <span
-                className="font-large"
-                style={{ color: BRAND_COLORS.secondary }}
-              >
-                Ather Energy (EV Charger)
-              </span>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex items-center">
-              <div
-                className="w-8 h-8 flex items-center justify-center rounded-full mr-3"
-                style={{ backgroundColor: "rgba(220, 38, 38, 0.1)" }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  style={{ color: BRAND_COLORS.secondary }}
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <span
-                className="font-medium"
-                style={{ color: BRAND_COLORS.secondary }}
-              >
+              <span className="font-medium text-gray-900">
                 Einova (Online UPS)
               </span>
             </div>
@@ -434,12 +350,12 @@ const MajorCustomers = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex items-center">
               <div
                 className="w-8 h-8 flex items-center justify-center rounded-full mr-3"
-                style={{ backgroundColor: "rgba(220, 38, 38, 0.1)" }}
+                style={{ backgroundColor: "rgba(88, 200, 227, 0.1)" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-4 w-4"
-                  style={{ color: BRAND_COLORS.secondary }}
+                  style={{ color: BRAND_COLORS.primary }}
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -450,10 +366,7 @@ const MajorCustomers = () => {
                   />
                 </svg>
               </div>
-              <span
-                className="font-medium"
-                style={{ color: BRAND_COLORS.secondary }}
-              >
+              <span className="font-medium text-gray-900">
                 TVSE (Multiple Products)
               </span>
             </div>

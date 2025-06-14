@@ -440,10 +440,10 @@ const HeroSection = () => {
             {
               number: "500+",
               label: "Clients Served",
-              desc: "Across 12+ sectors",
+              desc: "Across 9+ sectors",
             },
             {
-              number: "99.9%",
+              number: "95%",
               label: "Uptime Guarantee",
               desc: "Reliable solutions",
             },

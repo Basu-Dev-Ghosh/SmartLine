@@ -163,10 +163,11 @@ const Navbar = () => {
   ];
 
   const navItems = [
-    { label: "Partners", sectionId: "partners" },
     { label: "Customers", sectionId: "customers" },
-    { label: "Testimonials", sectionId: "testimonials" },
+    { label: "Partners", sectionId: "partners" },
+    { label: "FAQ", sectionId: "faq" },
     { label: "Why Us", sectionId: "why-choose" },
+    { label: "About Us", sectionId: "about" },
   ];
 
   // Skip rendering the navbar on admin pages
@@ -189,11 +190,12 @@ const Navbar = () => {
           "hero",
           "products",
           "services",
-          "partners",
           "customers",
+          "partners",
           "valued-customers",
-          "testimonials",
           "why-choose",
+          "faq",
+          "about",
         ];
         const scrollPosition = window.scrollY + 100;
 

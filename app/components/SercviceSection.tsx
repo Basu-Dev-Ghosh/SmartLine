@@ -4,7 +4,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import {
+  Zap,
+  Battery,
+  BarChart3,
+  Settings,
+  Car,
+  Shield,
+  Cable,
+  Sun,
+} from "lucide-react";
 
 // Brand colors
 const BRAND_COLORS = {
@@ -34,35 +43,23 @@ const ServicesSection = () => {
   const [expandedService, setExpandedService] = useState<string | null>(
     "ups-service"
   );
-  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const scrollToTestimonials = () => {
-    // If on homepage, scroll to section
-    const testimonialsSection = document.getElementById("testimonials");
-    if (testimonialsSection) {
-      testimonialsSection.scrollIntoView({ behavior: "smooth" });
-    } else {
-      // If on another page, navigate to homepage with testimonials anchor
-      router.push("/#testimonials");
-    }
-  };
-
   // Exact service structure as specified
   const services: Service[] = [
     {
       id: "ups-service",
-      icon: "M13 10V3L4 14h7v7l9-11h-7z",
+      icon: "Zap",
       title: "UPS & Battery Service",
       description:
-        "Complete range of UPS and battery maintenance and repair services.",
+        "End to End UPS and battery maintenance and repair services.",
       benefits: [
-        "Extended equipment lifespan",
-        "Reduced downtime risk",
-        "Improved system efficiency",
+        "1 KVA to 100 KVA UPS Support",
+        "PM Scheduling to Minimise Downtime",
+        "Battery Health Checkup for proper battery backup time",
       ],
       subcategories: [
         {
@@ -87,7 +84,7 @@ const ServicesSection = () => {
     },
     {
       id: "power-audit",
-      icon: "M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z",
+      icon: "BarChart3",
       title: "Power Audit",
       description:
         "Detailed assessment of your power infrastructure to identify risks and optimization opportunities.",
@@ -99,7 +96,7 @@ const ServicesSection = () => {
     },
     {
       id: "battery-health",
-      icon: "M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15",
+      icon: "Battery",
       title: "Battery Health Monitoring",
       description:
         "Proactive monitoring of battery conditions to prevent failures and extend lifespan.",
@@ -111,7 +108,7 @@ const ServicesSection = () => {
     },
     {
       id: "custom-solutions",
-      icon: "M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z",
+      icon: "Settings",
       title: "Customized Solutions",
       description:
         "Tailored power solutions designed for your specific business requirements and environment.",
@@ -119,7 +116,7 @@ const ServicesSection = () => {
     },
     {
       id: "ev-charger",
-      icon: "M5 12a1 1 0 01-1-1V5a1 1 0 011-1h2a1 1 0 011 1v1h10a1 1 0 011 1v7a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1H6a1 1 0 01-1-1z M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12",
+      icon: "Car",
       title: "EV Charger Services",
       description:
         "Installation, maintenance and repair services for electric vehicle charging stations.",
@@ -131,7 +128,7 @@ const ServicesSection = () => {
     },
     {
       id: "amc-service",
-      icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z",
+      icon: "Shield",
       title: "UPS AMC Services",
       description:
         "Annual Maintenance Contracts ensuring your power systems operate at peak performance year-round.",
@@ -143,7 +140,7 @@ const ServicesSection = () => {
     },
     {
       id: "electrical-wiring",
-      icon: "M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z",
+      icon: "Cable",
       title: "Electrical L.T. Wiring",
       description:
         "Professional electrical wiring and maintenance services for commercial and industrial facilities.",
@@ -155,7 +152,7 @@ const ServicesSection = () => {
     },
     {
       id: "solar-solutions",
-      icon: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z",
+      icon: "Sun",
       title: "Customized Solar Solutions",
       description:
         "End-to-end solar power system installation and maintenance for sustainable energy generation.",
@@ -167,6 +164,20 @@ const ServicesSection = () => {
     },
   ];
 
+  // Function to get the icon component
+  const getIconComponent = (iconName: string) => {
+    const icons = {
+      Zap,
+      Battery,
+      BarChart3,
+      Settings,
+      Car,
+      Shield,
+      Cable,
+      Sun,
+    };
+    return icons[iconName as keyof typeof icons] || Zap;
+  };
   // Toggle expanded service
   const toggleExpand = (serviceId: string) => {
     if (expandedService === serviceId) {
@@ -291,21 +302,15 @@ const ServicesSection = () => {
                       repeatType: "loop",
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      style={{ color: BRAND_COLORS.primary }}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d={service.icon}
-                      />
-                    </svg>
+                    {(() => {
+                      const IconComponent = getIconComponent(service.icon);
+                      return (
+                        <IconComponent
+                          className="h-6 w-6"
+                          style={{ color: BRAND_COLORS.primary }}
+                        />
+                      );
+                    })()}
                   </motion.div>
 
                   {service.subcategories && (
@@ -440,248 +445,6 @@ const ServicesSection = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Service Approach Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-24"
-        >
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              {/* Left side - text content */}
-              <div className="p-8 lg:p-12">
-                <div
-                  className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-6"
-                  style={{ backgroundColor: `rgba(88, 200, 227, 0.1)` }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    style={{ color: BRAND_COLORS.primary }}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Our Service Approach
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  At SMARTLiNE, we believe in a proactive, customer-centric
-                  approach to service delivery. Our team of qualified engineers
-                  brings decades of experience to every project, ensuring
-                  reliable and efficient solutions.
-                </p>
-
-                <div className="space-y-4">
-                  {[
-                    {
-                      title: "Expertise",
-                      description:
-                        "Our team members have several years of expertise in providing customized solutions across various applications.",
-                    },
-                    {
-                      title: "24x7 Availability",
-                      description:
-                        "We communicate with you round the clock, ensuring support whenever you need it - Always On Line.",
-                    },
-                    {
-                      title: "Flexibility",
-                      description:
-                        "We custom-build solutions to your specific requirements and can adjust quickly to changes or additions.",
-                    },
-                    {
-                      title: "Speed",
-                      description:
-                        "While keeping up with changing business needs and technology, we have a proven record of delivering solutions on time.",
-                    },
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex">
-                      <div className="flex-shrink-0">
-                        <div
-                          className="flex items-center justify-center h-6 w-6 rounded-full text-white"
-                          style={{ backgroundColor: BRAND_COLORS.primary }}
-                        >
-                          {idx + 1}
-                        </div>
-                      </div>
-                      <div className="ml-4">
-                        <h4 className="text-lg font-medium text-gray-900">
-                          {item.title}
-                        </h4>
-                        <p className="mt-1 text-sm text-gray-600">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <Link href="/contact">
-                  <motion.button
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className="mt-8 px-6 py-3 text-white font-medium rounded-md shadow-md transition-colors duration-300 inline-flex items-center"
-                    style={{
-                      backgroundColor: BRAND_COLORS.primary,
-                    }}
-                  >
-                    Contact Our Service Team
-                    <svg
-                      className="w-5 h-5 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      ></path>
-                    </svg>
-                  </motion.button>
-                </Link>
-              </div>
-
-              {/* Right side - Service stats */}
-              <div
-                className="p-8 lg:p-12 text-white"
-                style={{ backgroundColor: BRAND_COLORS.primary }}
-              >
-                <h3 className="text-2xl font-bold mb-8">
-                  Why Customers Choose Our Services
-                </h3>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  {[
-                    { number: "20+", label: "Years of Service Experience" },
-                    { number: "500+", label: "Successful Service Projects" },
-                    { number: "24/7", label: "Customer Support" },
-                    { number: "100%", label: "Client Satisfaction Goal" },
-                  ].map((stat, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                      className="text-center p-6 rounded-lg"
-                      style={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                    >
-                      <motion.div
-                        animate={{
-                          scale: [1, 1.05, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          delay: index * 0.5,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                        }}
-                        className="text-3xl md:text-4xl font-bold mb-2"
-                      >
-                        {stat.number}
-                      </motion.div>
-                      <p className="text-white/80">{stat.label}</p>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="mt-12 border-t border-white/20 pt-8">
-                  <h4 className="font-semibold mb-4">
-                    Service Level Agreement Benefits:
-                  </h4>
-                  <ul className="space-y-2">
-                    {[
-                      "Guaranteed response times",
-                      "Preventive maintenance schedules",
-                      "Priority emergency support",
-                      "Regular system health reports",
-                      "Dedicated service manager",
-                    ].map((item, idx) => (
-                      <li key={idx} className="flex items-center">
-                        <svg
-                          className="w-5 h-5 mr-2 text-white/70"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          ></path>
-                        </svg>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-20"
-        >
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            Need Custom Services?
-          </h3>
-          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-            We understand that every business has unique power requirements.
-            Contact us today to discuss your specific needs and how SMARTLiNE
-            can tailor solutions to help you meet your business goals.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/contact?tab=quote")}
-              className="px-8 py-3 text-white font-medium rounded-md shadow-md transition-colors duration-300"
-              style={{ backgroundColor: BRAND_COLORS.primary }}
-            >
-              Request a Quote
-            </motion.button>
-            <motion.button
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToTestimonials}
-              className="px-8 py-3 bg-white font-medium rounded-md shadow-md border transition-colors duration-300"
-              style={{
-                color: BRAND_COLORS.primary,
-                borderColor: BRAND_COLORS.primary,
-              }}
-            >
-              See Testimonials
-            </motion.button>
-          </div>
         </motion.div>
       </div>
     </section>
