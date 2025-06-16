@@ -17,6 +17,7 @@ interface Partner {
   logo: string;
   type: "oem" | "si";
   description: string;
+  hasLogo: boolean;
 }
 
 const PartnerBrands = () => {
@@ -28,114 +29,129 @@ const PartnerBrands = () => {
     {
       id: "fuji-electric",
       name: "Fuji Electric India Private Limited",
-      logo: "/partners/fuji.jpg", // Not available yet
+      logo: "/partners/fuji.jpg",
       type: "oem",
       description:
         "Leading manufacturer of power electronics and industrial systems.",
+      hasLogo: true,
     },
     {
       id: "schneider-electric",
       name: "Schneider Electric",
-      logo: "/partners/schneider.jpg", // Available
+      logo: "/partners/schneider.jpg",
       type: "oem",
       description:
         "Global leader in energy management and automation solutions.",
+      hasLogo: true,
     },
     {
       id: "amara-raja",
       name: "Amara Raja Energy & Mobility Limited",
-      logo: "/partners/araja.jpg", // Available
+      logo: "/partners/araja.jpg",
       type: "oem",
       description: "Advanced energy storage and mobility solutions provider.",
+      hasLogo: true,
     },
     {
       id: "exide",
       name: "Exide",
-      logo: "/partners/exide.jpg", // Available
+      logo: "/partners/exide.jpg",
       type: "oem",
       description: "Trusted battery technology and energy storage solutions.",
+      hasLogo: true,
     },
     {
       id: "apc",
       name: "APC",
-      logo: "/partners/apc2.jpg", // Available
+      logo: "/partners/apc2.jpg",
       type: "oem",
       description:
         "Uninterruptible power supply and surge protection solutions.",
+      hasLogo: true,
     },
     {
       id: "delta",
       name: "Delta",
-      logo: "/partners/delta.png", // Available
+      logo: "/partners/delta.png",
       type: "oem",
       description: "Power and thermal management solutions provider.",
+      hasLogo: true,
     },
     {
       id: "vertiv",
       name: "Vertiv (Earlier Known as Emerson)",
-      logo: "/partners/vertiv.jpg", // Available
+      logo: "/partners/vertiv.jpg",
       type: "oem",
       description: "Critical digital infrastructure and continuity solutions.",
+      hasLogo: true,
     },
     {
       id: "waaree",
       name: "Waaree Energies Ltd",
-      logo: "/partners/waaree.jpg", // Not available yet
+      logo: "/partners/waaree.jpg",
       type: "oem",
       description: "Solar energy solutions and renewable power systems.",
+      hasLogo: true,
     },
     {
       id: "relicell",
       name: "Relicell",
-      logo: "/partners/relicell.jpg", // Available
+      logo: "/partners/relicell.jpg",
       type: "oem",
       description: "Advanced battery technology and power storage solutions.",
+      hasLogo: true,
     },
 
     // SI Partners (as specified by client)
     {
       id: "hp",
       name: "Hewlett Packard (HP)",
-      logo: "/partners/hp.jpg", // Available
+      logo: "/partners/hp.jpg",
       type: "si",
       description:
         "Global technology solutions and digital transformation services.",
+      hasLogo: true,
     },
     {
       id: "future-netwings",
       name: "Future Netwings Solutions Private Limited",
-      logo: "/partners/fnet.jpg", // Not available yet
+      logo: "/partners/fnet.jpg",
       type: "si",
       description: "Comprehensive IT infrastructure and networking solutions.",
+      hasLogo: true,
     },
     {
       id: "accel-it",
       name: "Accel IT Services",
-      logo: "/partners/accelit.jpg", // Available (assuming accel.jpg is for Accel IT)
+      logo: "/partners/accelit.jpg",
       type: "si",
       description: "Enterprise IT solutions and system integration services.",
+      hasLogo: true,
     },
     {
       id: "cms-computers",
       name: "CMS Computers",
-      logo: "/partners/cms2.jpg", // Not available yet
+      logo: "/partners/cms2.jpg",
       type: "si",
       description: "Complete computer solutions and IT support services.",
+      hasLogo: true,
     },
     {
       id: "team-computer",
       name: "Team Computer",
-      logo: "/partners/tc.jpg", // Not available yet
+      logo: "/partners/tc.jpg",
       type: "si",
       description:
         "Professional IT services and technology solutions provider.",
+      hasLogo: true,
     },
     {
       id: "bharat-it",
       name: "Bharat IT",
-      logo: "/partners/bit.jpg", // Available (assuming bharat.jpg is for Bharat IT)
+      logo: "/partners/bit.jpg",
       type: "si",
       description: "Integrated IT solutions and digital services provider.",
+      hasLogo: true,
     },
   ];
 
@@ -267,51 +283,29 @@ const PartnerBrands = () => {
             >
               {/* Partner Logo */}
               <div className="h-32 flex items-center justify-center bg-gradient-to-br from-gray-50 to-white border-b border-gray-100 p-6">
-                {/* Check if we have the actual logo file */}
-                {[
-                  "schneider.jpg",
-                  "amara-raja.png",
-                  "exide.jpg",
-                  "apc.png",
-                  "delta.png",
-                  "vertiv.png",
-                  "relicell.jpg",
-                  "hp.jpg",
-                  "accel.jpg",
-                ].includes(partner.logo.split("/").pop() ?? "") ? (
+                {partner.hasLogo ? (
                   <img
                     src={partner.logo}
                     alt={`${partner.name} logo`}
                     className="max-h-16 max-w-full object-contain filter hover:scale-110 transition-transform duration-300"
                     onError={(e) => {
                       // If image fails to load, show placeholder
-                      e.currentTarget.style.display = "none";
-                      if (e.currentTarget.nextElementSibling) {
-                        (
-                          e.currentTarget.nextElementSibling as HTMLElement
-                        ).style.display = "block";
+                      const target = e.currentTarget as HTMLImageElement;
+                      target.style.display = "none";
+                      const placeholder =
+                        target.nextElementSibling as HTMLElement;
+                      if (placeholder) {
+                        placeholder.style.display = "block";
                       }
                     }}
                   />
                 ) : null}
 
-                {/* Placeholder for missing logos */}
+                {/* Placeholder for failed/missing logos */}
                 <div
                   className="text-center"
                   style={{
-                    display: [
-                      "schneider.jpg",
-                      "amara-raja.png",
-                      "exide.jpg",
-                      "apc.png",
-                      "delta.png",
-                      "vertiv.png",
-                      "relicell.jpg",
-                      "hp.jpg",
-                      "accel.jpg",
-                    ].includes(partner.logo.split("/").pop() ?? "")
-                      ? "none"
-                      : "block",
+                    display: partner.hasLogo ? "none" : "block",
                   }}
                 >
                   <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-gradient-to-br from-cyan-100 to-teal-100 flex items-center justify-center">
