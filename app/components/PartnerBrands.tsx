@@ -44,7 +44,7 @@ const PartnerBrands = () => {
     {
       id: "amara-raja",
       name: "Amara Raja Energy & Mobility Limited",
-      logo: "/partners/amara-raja.png", // Available
+      logo: "/partners/araja.jpg", // Available
       type: "oem",
       description: "Advanced energy storage and mobility solutions provider.",
     },
@@ -58,7 +58,7 @@ const PartnerBrands = () => {
     {
       id: "apc",
       name: "APC",
-      logo: "/partners/apc.png", // Available
+      logo: "/partners/apc2.jpg", // Available
       type: "oem",
       description:
         "Uninterruptible power supply and surge protection solutions.",
@@ -73,14 +73,14 @@ const PartnerBrands = () => {
     {
       id: "vertiv",
       name: "Vertiv (Earlier Known as Emerson)",
-      logo: "/partners/vertiv.png", // Available
+      logo: "/partners/vertiv.jpg", // Available
       type: "oem",
       description: "Critical digital infrastructure and continuity solutions.",
     },
     {
       id: "waaree",
       name: "Waaree Energies Ltd",
-      logo: "/partners/waaree.png", // Not available yet
+      logo: "/partners/waaree.jpg", // Not available yet
       type: "oem",
       description: "Solar energy solutions and renewable power systems.",
     },
@@ -104,28 +104,28 @@ const PartnerBrands = () => {
     {
       id: "future-netwings",
       name: "Future Netwings Solutions Private Limited",
-      logo: "/partners/future-netwings.png", // Not available yet
+      logo: "/partners/fnet.jpg", // Not available yet
       type: "si",
       description: "Comprehensive IT infrastructure and networking solutions.",
     },
     {
       id: "accel-it",
       name: "Accel IT Services",
-      logo: "/partners/accel.jpg", // Available (assuming accel.jpg is for Accel IT)
+      logo: "/partners/accelit.jpg", // Available (assuming accel.jpg is for Accel IT)
       type: "si",
       description: "Enterprise IT solutions and system integration services.",
     },
     {
       id: "cms-computers",
       name: "CMS Computers",
-      logo: "/partners/cms-computers.png", // Not available yet
+      logo: "/partners/cms2.jpg", // Not available yet
       type: "si",
       description: "Complete computer solutions and IT support services.",
     },
     {
       id: "team-computer",
       name: "Team Computer",
-      logo: "/partners/team-computer.png", // Not available yet
+      logo: "/partners/tc.jpg", // Not available yet
       type: "si",
       description:
         "Professional IT services and technology solutions provider.",
@@ -133,7 +133,7 @@ const PartnerBrands = () => {
     {
       id: "bharat-it",
       name: "Bharat IT",
-      logo: "/partners/bharat-it.png", // Available (assuming bharat.jpg is for Bharat IT)
+      logo: "/partners/bit.jpg", // Available (assuming bharat.jpg is for Bharat IT)
       type: "si",
       description: "Integrated IT solutions and digital services provider.",
     },
